@@ -52,37 +52,12 @@ public abstract class AppTemplate extends Application {
     
     // THIS METHOD MUST BE OVERRIDDEN WHERE THE CUSTOM BUILDER OBJECT
     // WILL PROVIDE THE CUSTOM APP COMPONENTS
-
-    /**
-     *
-     * @return
-     */
-        public abstract AppComponentsBuilder makeAppBuilderHook();
+    public abstract AppComponentsBuilder makeAppBuilderHook();
     
     // COMPONENT ACCESSOR METHODS
-
-    /**
-     *
-     * @return
-     */
-        public AppDataComponent getDataComponent() { return dataComponent; }
-
-    /**
-     *
-     * @return
-     */
+    public AppDataComponent getDataComponent() { return dataComponent; }
     public AppFileComponent getFileComponent() { return fileComponent; }
-
-    /**
-     *
-     * @return
-     */
     public AppWorkspaceComponent getWorkspaceComponent() { return workspaceComponent; }
-
-    /**
-     *
-     * @return
-     */
     public AppGUI getGUI() { return gui; }
 
     /**
