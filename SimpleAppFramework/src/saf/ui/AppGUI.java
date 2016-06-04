@@ -30,71 +30,28 @@ import saf.components.AppStyleArbiter;
  */
 public class AppGUI implements AppStyleArbiter {
     // THIS HANDLES INTERACTIONS WITH FILE-RELATED CONTROLS
-
-    /**
-     *
-     */
-        protected AppFileController fileController;
+    protected AppFileController fileController;
 
     // THIS IS THE APPLICATION WINDOW
-
-    /**
-     *
-     */
-        protected Stage primaryStage;
+    protected Stage primaryStage;
 
     // THIS IS THE STAGE'S SCENE GRAPH
-
-    /**
-     *
-     */
-        protected Scene primaryScene;
+    protected Scene primaryScene;
 
     // THIS PANE ORGANIZES THE BIG PICTURE CONTAINERS FOR THE
     // APPLICATION AppGUI
-
-    /**
-     *
-     */
-        protected BorderPane appPane;
+    protected BorderPane appPane;
     
     // THIS IS THE TOP TOOLBAR AND ITS CONTROLS
-
-    /**
-     *
-     */
-        protected FlowPane fileToolbarPane;
-
-    /**
-     *
-     */
+    protected FlowPane fileToolbarPane;
     protected Button newButton;
-
-    /**
-     *
-     */
     protected Button loadButton;
-
-    /**
-     *
-     */
     protected Button saveButton;
-
-    /**
-     *
-     */
     protected Button exitButton;
     
     // HERE ARE OUR DIALOGS
-
-    /**
-     *
-     */
-        protected AppYesNoCancelDialogSingleton yesNoCancelDialog;
+    protected AppYesNoCancelDialogSingleton yesNoCancelDialog;
     
-    /**
-     *
-     */
     protected String appTitle;
     
     /**
