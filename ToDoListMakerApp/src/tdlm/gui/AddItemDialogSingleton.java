@@ -5,6 +5,8 @@
  */
 package tdlm.gui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -31,19 +34,17 @@ public class AddItemDialogSingleton extends Stage {
     Scene messageScene;
     Label messageLabel;
     
-    HBox categoryBox;
+    GridPane inputGrid;
+    
     Label categoryLabel;
     TextField categoryTextField;
     
-    HBox descriptionBox;
     Label descriptionLabel;
     TextField descriptionTextField;
     
-    HBox startBox;
     Label startLabel;
     DatePicker startDatePicker;
     
-    HBox endBox;
     Label endLabel;
     DatePicker endDatePicker;
     
@@ -54,6 +55,7 @@ public class AddItemDialogSingleton extends Stage {
     HBox controlBox;
     Button okButton;
     Button cancelButton;
+    String selection;
     
     // CONSTANT COMPONENT LABELS
     public static final String CATEGORY_LABEL = "Category:";
@@ -61,8 +63,8 @@ public class AddItemDialogSingleton extends Stage {
     public static final String START_LABEL = "Start Date:";
     public static final String END_LABEL = "End Date:";
     public static final String COMPLETED_LABEL = "Completed?";
-    public static final String OK_BUTTON_LABEL = "OK";
-    public static final String CANCEL_BUTTON_LABEL = "Cancel";
+    public static final String OK = "OK";
+    public static final String CANCEL = "Cancel";
     
      /**
      * Note that the constructor is private since it follows
@@ -98,31 +100,24 @@ public class AddItemDialogSingleton extends Stage {
         messageLabel = new Label();
         
         // CATEGORY INPUT
-        categoryBox = new HBox();
         categoryLabel = new Label(CATEGORY_LABEL);
         categoryTextField = new TextField();
-        categoryBox.getChildren().addAll(categoryLabel,categoryTextField);
         
         // DESCRIPTION INPUT
-        descriptionBox = new HBox();
         descriptionLabel = new Label(DESCRIPTION_LABEL);
         descriptionTextField = new TextField();
-        descriptionBox.getChildren().addAll(descriptionLabel,descriptionTextField);
         
         // START DATE INPUT
-        startBox = new HBox();
         startLabel = new Label(START_LABEL);
         startDatePicker = new DatePicker();
-        startBox.getChildren().addAll(startLabel,startDatePicker);
         
         // END DATE INPUT
-        endBox = new HBox();
         endLabel = new Label(END_LABEL);
         endDatePicker = new DatePicker();
-        endBox.getChildren().addAll(endLabel,endDatePicker);
         
         // COMPLETED INPUT
         completedBox = new HBox();
+        completedBox.setAlignment(Pos.CENTER);
         completedLabel = new Label(COMPLETED_LABEL);
         completedCheckBox = new CheckBox();
         completedBox.getChildren().addAll(completedLabel,completedCheckBox);
@@ -130,18 +125,33 @@ public class AddItemDialogSingleton extends Stage {
         // OK AND CANCEL CONTROLS
         controlBox = new HBox();
         controlBox.setAlignment(Pos.CENTER);
-        okButton = new Button(OK_BUTTON_LABEL);
-        cancelButton = new Button(CANCEL_BUTTON_LABEL);
+        okButton = new Button(OK);
+        cancelButton = new Button(CANCEL);
         controlBox.getChildren().addAll(okButton,cancelButton);
+        
+        // MAKE THE EVENT HANDLER FOR THESE BUTTONS
+        EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
+            Button sourceButton = (Button)ae.getSource();
+            AddItemDialogSingleton.this.selection = sourceButton.getText();
+            AddItemDialogSingleton.this.hide();
+        };
+        
+        // AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
+        okButton.setOnAction(okCancelHandler);
+        cancelButton.setOnAction(okCancelHandler);
+        
+        // INPUT GRID
+        inputGrid = new GridPane();
+        inputGrid.addRow(0,categoryLabel,categoryTextField);
+        inputGrid.addRow(1,descriptionLabel,descriptionTextField);
+        inputGrid.addRow(2,startLabel,startDatePicker);
+        inputGrid.addRow(3,endLabel,endDatePicker);
         
         // WE'LL PUT EVERYTHING HERE
         messagePane = new VBox();
         messagePane.setAlignment(Pos.CENTER);
         messagePane.getChildren().add(messageLabel);
-        messagePane.getChildren().add(categoryBox);
-        messagePane.getChildren().add(descriptionBox);
-        messagePane.getChildren().add(startBox);
-        messagePane.getChildren().add(endBox);
+        messagePane.getChildren().add(inputGrid);
         messagePane.getChildren().add(completedBox);
         messagePane.getChildren().add(controlBox);
         
