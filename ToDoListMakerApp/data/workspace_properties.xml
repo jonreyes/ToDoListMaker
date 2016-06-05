@@ -13,10 +13,10 @@
 	<property name="MOVE_DOWN_ICON"		value="MoveDown.png"></property>
         
         <!-- TOOLTIPS FOR BUTTONS -->
-	<property name="ADD_ITEM_TOOLTIP"	    value="Select Background Color"></property>
-	<property name="REMOVE_ITEM_TOOLTIP"        value="Select Fill Color"></property>
-	<property name="MOVE_UP_ITEM_TOOLTIP"	    value="Select Outline Color"></property>
-	<property name="MOVE_DOWN_ITEM_TOOLTIP"	    value="Take Snapshot"></property>
+	<property name="ADD_ITEM_TOOLTIP"	    value="Add Item"></property>
+	<property name="REMOVE_ITEM_TOOLTIP"        value="Remove Item"></property>
+	<property name="MOVE_UP_ITEM_TOOLTIP"	    value="Move Up"></property>
+	<property name="MOVE_DOWN_ITEM_TOOLTIP"	    value="Move Down"></property>
 	
 	<!-- HEADINGS AND PROMPTS -->
 	<property name="WORKSPACE_HEADING_LABEL"    value="To Do List"></property>
