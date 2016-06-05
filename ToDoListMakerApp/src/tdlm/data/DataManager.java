@@ -2,6 +2,7 @@ package tdlm.data;
 
 import java.util.ArrayList;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.effect.BlurType;
@@ -47,6 +48,7 @@ public class DataManager implements AppDataComponent {
     public DataManager(AppTemplate initApp) throws Exception {
 	// KEEP THE APP FOR LATER
 	app = initApp;
+        items = FXCollections.observableArrayList();
     }
     
     public ObservableList<ToDoItem> getItems() {
@@ -65,13 +67,10 @@ public class DataManager implements AppDataComponent {
         items.add(item);
     }
 
-
-
     /**
      * 
      */
     @Override
     public void reset() {
-
     }
 }

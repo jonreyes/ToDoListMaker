@@ -20,6 +20,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import saf.AppTemplate;
+import tdlm.data.DataManager;
+import tdlm.data.ToDoItem;
 
 /**
  *
@@ -55,7 +58,9 @@ public class AddItemDialogSingleton extends Stage {
     HBox controlBox;
     Button okButton;
     Button cancelButton;
+    
     String selection;
+    ToDoItem newItem;
     
     // CONSTANT COMPONENT LABELS
     public static final String CATEGORY_LABEL = "Category:";
@@ -83,6 +88,15 @@ public class AddItemDialogSingleton extends Stage {
 	if (singleton == null)
 	    singleton = new AddItemDialogSingleton();
 	return singleton;
+    }
+    
+    /**
+     * An accessor method for getting the item to be added.
+     * 
+     * @return The new item to be added.
+     */
+    public ToDoItem getItem(){
+        return newItem;
     }
     
     /**
@@ -116,11 +130,7 @@ public class AddItemDialogSingleton extends Stage {
         endDatePicker = new DatePicker();
         
         // COMPLETED INPUT
-        completedBox = new HBox();
-        completedBox.setAlignment(Pos.CENTER);
-        completedLabel = new Label(COMPLETED_LABEL);
-        completedCheckBox = new CheckBox();
-        completedBox.getChildren().addAll(completedLabel,completedCheckBox);
+        completedCheckBox = new CheckBox(COMPLETED_LABEL);
         
         // OK AND CANCEL CONTROLS
         controlBox = new HBox();
@@ -133,6 +143,15 @@ public class AddItemDialogSingleton extends Stage {
         EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
             Button sourceButton = (Button)ae.getSource();
             AddItemDialogSingleton.this.selection = sourceButton.getText();
+            if (AddItemDialogSingleton.this.selection.equals(OK)){
+                newItem = new ToDoItem(
+                    categoryTextField.getText(),
+                    descriptionTextField.getText(),
+                    startDatePicker.getValue(),
+                    endDatePicker.getValue(),
+                    completedCheckBox.isSelected()
+                );
+            }
             AddItemDialogSingleton.this.hide();
         };
         
@@ -152,7 +171,7 @@ public class AddItemDialogSingleton extends Stage {
         messagePane.setAlignment(Pos.CENTER);
         messagePane.getChildren().add(messageLabel);
         messagePane.getChildren().add(inputGrid);
-        messagePane.getChildren().add(completedBox);
+        messagePane.getChildren().add(completedCheckBox);
         messagePane.getChildren().add(controlBox);
         
         // MAKE IT LOOK NICE

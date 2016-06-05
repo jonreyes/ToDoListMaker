@@ -6,6 +6,8 @@ import saf.AppTemplate;
 import tdlm.gui.AddItemDialogSingleton;
 import static tdlm.PropertyType.ADD_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
+import tdlm.data.DataManager;
+import tdlm.data.ToDoItem;
 /**
  * This class responds to interactions with todo list editing controls.
  * 
@@ -30,7 +32,9 @@ public class ToDoListController {
 	workspace.reloadWorkspace();
         
         dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(ADD_ITEM_MESSAGE));
-        
+        ToDoItem newItem = dialog.getItem();
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        if (newItem != null) dataManager.addItem(newItem);
     }
     //5
     public void processRemoveItem() {
