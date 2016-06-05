@@ -14,7 +14,7 @@
         
         <!-- TOOLTIPS FOR BUTTONS -->
 	<property name="ADD_ITEM_TOOLTIP"	    value="Select Background Color"></property>
-	<property name="REMOVE_ITEM_TOOLTIP"		    value="Select Fill Color"></property>
+	<property name="REMOVE_ITEM_TOOLTIP"        value="Select Fill Color"></property>
 	<property name="MOVE_UP_ITEM_TOOLTIP"	    value="Select Outline Color"></property>
 	<property name="MOVE_DOWN_ITEM_TOOLTIP"	    value="Take Snapshot"></property>
 	
@@ -32,12 +32,17 @@
         <property name="END_DATE_COLUMN_HEADING"        value="End Date"></property>
         <property name="COMPLETED_COLUMN_HEADING"       value="Completed"></property>
         
-                	
+               
 	<!-- ERROR MESSAGES AND TITLES FOR THEIR DIALOGS -->
 	<property name="ATTRIBUTE_UPDATE_ERROR_MESSAGE"	    value="WARNING: An error occured updating the element's attribute."></property>
 	<property name="ATTRIBUTE_UPDATE_ERROR_TITLE"	    value="Attribute Update Error"></property>
 	<property name="UPDATE_ERROR_MESSAGE"		    value="An error occured updating the UI"></property>
 	<property name="UPDATE_ERROR_TITLE"		    value="UI Update Error"></property>
+        
+        <!-- NEW MESSAGES AND TITLES -->
+        <property name="ADD_ITEM_TITLE"          value="Add Item"></property>
+        <property name="ADD_ITEM_MESSAGE"        value="Enter the item data."></property>
+        
     </property_list>
     <property_options_list>
     </property_options_list>

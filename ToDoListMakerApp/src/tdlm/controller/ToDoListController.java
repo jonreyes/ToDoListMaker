@@ -1,20 +1,11 @@
 package tdlm.controller;
 
-import java.io.File;
-import java.io.IOException;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javax.imageio.ImageIO;
-import tdlm.data.DataManager;
+import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
-
+import tdlm.gui.AddItemDialogSingleton;
+import static tdlm.PropertyType.ADD_ITEM_MESSAGE;
+import static tdlm.PropertyType.ADD_ITEM_TITLE;
 /**
  * This class responds to interactions with todo list editing controls.
  * 
@@ -27,25 +18,33 @@ public class ToDoListController {
     public ToDoListController(AppTemplate initApp) {
 	app = initApp;
     }
-    
-    public void processAddItem() {	
+    //4
+    public void processAddItem() {
+        AddItemDialogSingleton dialog = AddItemDialogSingleton.getSingleton();
+        dialog.init(app.getGUI().getWindow());
+        
+	PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
 	// ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
+        
+        dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(ADD_ITEM_MESSAGE));
+        
     }
-    
+    //5
     public void processRemoveItem() {
         
     }
-    
+    //6
     public void processMoveUpItem() {
         
     }
-    
+    //7
     public void processMoveDownItem() {
         
     }
-    
+    //8
     public void processEditItem() {
         
     }
