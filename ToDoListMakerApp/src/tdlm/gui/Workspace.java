@@ -208,9 +208,9 @@ public class Workspace extends AppWorkspaceComponent {
 	// NOW CONNECT THE BUTTONS TO THEIR HANDLERS
         addItemButton.setOnAction(e->{
             toDoListController.processAddItem();
+            // UPDATE TABLE GUI
             DataManager dataManager = (DataManager)app.getDataComponent();
             itemsTable.setItems(dataManager.getItems());
-            // AND NOW SETUP THE WORKSPACE
             workspace.getChildren().add(itemsBox);
         });
         removeItemButton.setOnAction(e->{
