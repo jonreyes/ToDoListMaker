@@ -31,7 +31,6 @@ public class DataManager implements AppDataComponent {
     /**
      * This constructor creates the data manager and sets up the
      *
-     *
      * @param initApp The application within which this data manager is serving.
      */
     public DataManager(AppTemplate initApp) throws Exception {

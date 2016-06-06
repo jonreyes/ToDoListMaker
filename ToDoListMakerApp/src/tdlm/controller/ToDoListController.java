@@ -29,7 +29,7 @@ public class ToDoListController {
     public ToDoListController(AppTemplate initApp) {
         // NOTHING YET
         size = 0;
-	app = initApp;
+        app = initApp;
     }
     
     public void processNameUpdate(){
@@ -48,8 +48,8 @@ public class ToDoListController {
     
     public void processAddItem() {
         // ENABLE/DISABLE THE PROPER BUTTONS
-	Workspace workspace = (Workspace)app.getWorkspaceComponent();
-	workspace.reloadWorkspace();
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        workspace.reloadWorkspace();
         
         InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -77,8 +77,8 @@ public class ToDoListController {
 
     public void processRemoveItem() {
          // ENABLE/DISABLE THE PROPER BUTTONS
-	Workspace workspace = (Workspace)app.getWorkspaceComponent();
-	workspace.reloadWorkspace();
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        workspace.reloadWorkspace();
         
         RemoveItemDialogSingleton dialog = workspace.getRemoveItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -105,17 +105,57 @@ public class ToDoListController {
     }
     //6
     public void processMoveUpItem() {
+        // ENABLE/DISABLE THE PROPER BUTTONS
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        workspace.reloadWorkspace();
         
+        // MOVE ITEM UP
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+        // GET ITEM
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        // INDICES
+        int index = itemsTable.getSelectionModel().getSelectedIndex();
+        int previous = index-1;
+        if (previous>=0){
+            ToDoItem previousItem = dataManager.getItems().get(previous);
+            // SWAP DATA
+            dataManager.getItems().set(previous,selectedItem);
+            dataManager.getItems().set(index, previousItem);
+        }
+        
+        // UPDATE THE TABLE
+        itemsTable.setItems(dataManager.getItems());
     }
     //7
     public void processMoveDownItem() {
+        // ENABLE/DISABLE THE PROPER BUTTONS
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        workspace.reloadWorkspace();
         
+        // MOVE ITEM DOWN
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+        // GET ITEM
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        // INDICES
+        int index = itemsTable.getSelectionModel().getSelectedIndex();
+        int next = index+1;
+        if (next<size){
+            ToDoItem nextItem = dataManager.getItems().get(next);
+            // SWAP DATA
+            dataManager.getItems().set(next,selectedItem);
+            dataManager.getItems().set(index, nextItem);
+        }
+        
+        // UPDATE THE TABLE
+        itemsTable.setItems(dataManager.getItems());
     }
     //8
     public void processEditItem() {
         // ENABLE/DISABLE THE PROPER BUTTONS
-	Workspace workspace = (Workspace)app.getWorkspaceComponent();
-	workspace.reloadWorkspace();
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        workspace.reloadWorkspace();
         
         InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
