@@ -4,11 +4,16 @@ import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
+import saf.ui.AppYesNoCancelDialogSingleton;
+import static saf.ui.AppYesNoCancelDialogSingleton.YES;
 import tdlm.gui.AddItemDialogSingleton;
 import static tdlm.PropertyType.ADD_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
+import static tdlm.PropertyType.REMOVE_ITEM_MESSAGE;
+import static tdlm.PropertyType.REMOVE_ITEM_TITLE;
 import tdlm.data.DataManager;
 import tdlm.data.ToDoItem;
+import tdlm.gui.RemoveItemDialogSingleton;
 /**
  * This class responds to interactions with todo list editing controls.
  * 
@@ -26,7 +31,7 @@ public class ToDoListController {
         size = 0;
 	app = initApp;
     }
-    //4
+
     public void processAddItem() {
         // ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
@@ -51,15 +56,28 @@ public class ToDoListController {
         // ENABLE AND DISABLE APPROPRIATE CONTROLS
         workspace.updateTableControls(size);
     }
-    //5
+
     public void processRemoveItem() {
          // ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
         
+        RemoveItemDialogSingleton dialog = workspace.getRemoveItemDialog();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        // SHOW REMOVE ITEM CONFIRMATION PROMPT
+        dialog.show(props.getProperty(REMOVE_ITEM_TITLE),props.getProperty(REMOVE_ITEM_MESSAGE));
+        
+        // GET SELECTED ITEM TO REMOVE
         DataManager dataManager = (DataManager)app.getDataComponent();
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        dataManager.removeItem(itemsTable.getSelectionModel().getSelectedItem());
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        
+        // VERIFY ACTION
+        String selection = dialog.getSelection();
+        if (selection.equals(YES)) dataManager.removeItem(selectedItem);
+        
+        // UPDATE THE TABLE AND SIZE
         itemsTable.setItems(dataManager.getItems());
         size = dataManager.getItems().size();
         

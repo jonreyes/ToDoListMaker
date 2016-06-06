@@ -43,6 +43,9 @@
         <property name="ADD_ITEM_TITLE"          value="Add Item"></property>
         <property name="ADD_ITEM_MESSAGE"        value="Enter the item data."></property>
         
+        <property name="REMOVE_ITEM_TITLE"          value="Remove Item"></property>
+        <property name="REMOVE_ITEM_MESSAGE"        value="Are you sure you want to remove the selected item data?"></property>
+        
     </property_list>
     <property_options_list>
     </property_options_list>

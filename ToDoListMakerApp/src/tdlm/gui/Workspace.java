@@ -94,7 +94,8 @@ public class Workspace extends AppWorkspaceComponent {
     AppMessageDialogSingleton messageDialog;
     AppYesNoCancelDialogSingleton yesNoCancelDialog;
     AddItemDialogSingleton addItemDialog;
-            
+    RemoveItemDialogSingleton removeItemDialog;
+    
     // FOR DISPLAYING DEBUG STUFF
     Text debugText;
 
@@ -196,9 +197,11 @@ public class Workspace extends AppWorkspaceComponent {
         workspace.getChildren().add(detailsBox);
         workspace.getChildren().add(itemsBox);
         
-        // SETUP DIALOG
+        // SETUP DIALOGS
         addItemDialog = AddItemDialogSingleton.getSingleton();
         addItemDialog.init(gui.getWindow());
+        removeItemDialog = RemoveItemDialogSingleton.getSingleton();
+        removeItemDialog.init(gui.getWindow());
     }
     
     /**
@@ -208,6 +211,15 @@ public class Workspace extends AppWorkspaceComponent {
      */
     public AddItemDialogSingleton getAddItemDialog(){
         return addItemDialog;
+    }
+    
+    /**
+     * An accessor method for getting the singleton object.
+     * 
+     * @return The one singleton dialog of this object type.
+     */
+    public RemoveItemDialogSingleton getRemoveItemDialog(){
+        return removeItemDialog;
     }
     
     /**

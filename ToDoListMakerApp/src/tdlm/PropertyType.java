@@ -39,6 +39,9 @@ public enum PropertyType {
     ADD_ITEM_MESSAGE,
     ADD_ITEM_TITLE,
     
+    REMOVE_ITEM_MESSAGE,
+    REMOVE_ITEM_TITLE,
+    
     CATEGORY_LABEL,
     DESCRIPTION_LABEL,
     START_LABEL,
