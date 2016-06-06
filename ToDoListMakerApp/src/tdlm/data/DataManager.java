@@ -1,5 +1,6 @@
 package tdlm.data;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,7 @@ public class DataManager implements AppDataComponent {
     AppTemplate app;
     
     /**
-     * THis constructor creates the data manager and sets up the
+     * This constructor creates the data manager and sets up the
      *
      *
      * @param initApp The application within which this data manager is serving.
@@ -36,9 +37,11 @@ public class DataManager implements AppDataComponent {
     public DataManager(AppTemplate initApp) throws Exception {
 	// KEEP THE APP FOR LATER
 	app = initApp;
+        name = new SimpleStringProperty();
+        owner = new SimpleStringProperty();
         items = FXCollections.observableArrayList();
     }
-    
+   
     public ObservableList<ToDoItem> getItems() {
 	return items;
     }
@@ -47,8 +50,16 @@ public class DataManager implements AppDataComponent {
         return name.get();
     }
     
+    public void setName(String name){
+        this.name.set(name);
+    }
+    
     public String getOwner() {
         return owner.get();
+    }
+    
+    public void setOwner(String owner) {
+        this.owner.set(owner);
     }
 
     public void addItem(ToDoItem item) {

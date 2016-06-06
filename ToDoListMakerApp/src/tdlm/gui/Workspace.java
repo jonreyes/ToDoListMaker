@@ -199,6 +199,24 @@ public class Workspace extends AppWorkspaceComponent {
     }
     
     /**
+     * An accessor method for getting the TextField object.
+     * 
+     * @return The TextField object of this type
+     */
+    public TextField getNameTextField(){
+        return nameTextField;
+    }
+    
+    /**
+     * An accessor method for getting the TextField object.
+     * 
+     * @return The TextField object of this type
+     */
+    public TextField getOwnerTextField(){
+        return ownerTextField;
+    }
+    
+    /**
      * An accessor method for getting the singleton object.
      * 
      * @return The one singleton dialog of this object type.
@@ -260,6 +278,12 @@ public class Workspace extends AppWorkspaceComponent {
 	toDoListController = new ToDoListController(app);
 	
 	// NOW CONNECT THE BUTTONS TO THEIR HANDLERS
+        nameTextField.setOnKeyReleased(e->{
+            toDoListController.processNameUpdate();
+        });
+        ownerTextField.setOnKeyReleased(e->{
+            toDoListController.processOwnerUpdate(); 
+        });
         addItemButton.setOnAction(e->{
             toDoListController.processAddItem();
         });

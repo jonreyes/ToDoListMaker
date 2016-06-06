@@ -31,7 +31,21 @@ public class ToDoListController {
         size = 0;
 	app = initApp;
     }
-
+    
+    public void processNameUpdate(){
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        String newName = workspace.getNameTextField().getText();
+        dataManager.setName(newName);
+    }
+    
+    public void processOwnerUpdate(){
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        String newOwner = workspace.getOwnerTextField().getText();
+        dataManager.setOwner(newOwner);
+    }
+    
     public void processAddItem() {
         // ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
