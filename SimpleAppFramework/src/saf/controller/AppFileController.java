@@ -151,7 +151,6 @@ public class AppFileController {
      * This method will save the current course to a file. Note that we already
      * know the name of the file, so we won't need to prompt the user.
      * 
-     * 
      * @param courseToSave The course being edited that is to be saved to a file.
      */
     public void handleSaveRequest() {

@@ -254,12 +254,13 @@ public class Workspace extends AppWorkspaceComponent {
      * @param size Describes the number of items in the table
      */
     public void updateTableControls(int size) {
-        // REMOVE BUTTONS ALWAYS ENABLED
-        // ONCE FIRST ITEM ADDED
-	if (size>0) removeItemButton.setDisable(false);
+        // REMOVE BUTTONS ENABLED
+        // ONCE FIRST ITEM ADDED AND SELECTED
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+	if (selectedItem!=null && size>0) removeItemButton.setDisable(false);
         else{removeItemButton.setDisable(true);}
         
-        // REMOVE BUTTONS ALWAYS ENABLED
+        // MOVE BUTTONS ENABLED
         // ONCE MORE THAN ONE ITEM ADDED
         if (size>1){
             moveUpItemButton.setDisable(false);
@@ -296,11 +297,12 @@ public class Workspace extends AppWorkspaceComponent {
         moveDownItemButton.setOnAction(e->{
             toDoListController.processMoveDownItem();
         });
-        
         itemsTable.setOnMouseClicked(e -> {
             if (e.getClickCount() == 2) {
                 toDoListController.processEditItem();
             }
+            // ENABLE AND DISABLE APPROPRIATE CONTROLS
+            updateTableControls(itemsTable.getItems().size());
         });
     }
     
