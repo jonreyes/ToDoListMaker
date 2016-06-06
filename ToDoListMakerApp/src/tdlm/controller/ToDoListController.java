@@ -6,7 +6,7 @@ import tdlm.gui.Workspace;
 import saf.AppTemplate;
 import saf.ui.AppYesNoCancelDialogSingleton;
 import static saf.ui.AppYesNoCancelDialogSingleton.YES;
-import tdlm.gui.AddItemDialogSingleton;
+import tdlm.gui.InputItemDialogSingleton;
 import static tdlm.PropertyType.ADD_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
 import static tdlm.PropertyType.REMOVE_ITEM_MESSAGE;
@@ -37,7 +37,7 @@ public class ToDoListController {
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
         
-        AddItemDialogSingleton dialog = workspace.getAddItemDialog();
+        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // SHOW ADD ITEM PROMPT

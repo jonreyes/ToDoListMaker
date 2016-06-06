@@ -29,9 +29,9 @@ import tdlm.data.ToDoItem;
  * 
  * @author Jon Reyes
  */
-public class AddItemDialogSingleton extends Stage {
+public class InputItemDialogSingleton extends Stage {
     // HERE'S THE SINGLETON OBJECT
-    static AddItemDialogSingleton singleton = null;
+    static InputItemDialogSingleton singleton = null;
     
     // HERE ARE THE DIALOG COMPONENTS 
     VBox messagePane;
@@ -78,16 +78,16 @@ public class AddItemDialogSingleton extends Stage {
      * 
      * @param primaryStage The owner of this modal dialog.
      */
-    private AddItemDialogSingleton(){}
+    private InputItemDialogSingleton(){}
     
     /**
      * A static accessor method for getting the singleton object.
      * 
      * @return The one singleton dialog of this object type.
      */
-    public static AddItemDialogSingleton getSingleton() {
+    public static InputItemDialogSingleton getSingleton() {
 	if (singleton == null)
-	    singleton = new AddItemDialogSingleton();
+	    singleton = new InputItemDialogSingleton();
 	return singleton;
     }
     
@@ -143,8 +143,9 @@ public class AddItemDialogSingleton extends Stage {
         // MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
             Button sourceButton = (Button)ae.getSource();
-            AddItemDialogSingleton.this.selection = sourceButton.getText();
-            if (AddItemDialogSingleton.this.selection.equals(OK)){
+            InputItemDialogSingleton.this.selection = sourceButton.getText();
+            if (InputItemDialogSingleton.this.selection.equals(OK)){
+                // CREATE NEW ITEM FROM INPUT
                 newItem = new ToDoItem(
                     categoryTextField.getText(),
                     descriptionTextField.getText(),
@@ -153,7 +154,13 @@ public class AddItemDialogSingleton extends Stage {
                     completedCheckBox.isSelected()
                 );
             }
-            AddItemDialogSingleton.this.hide();
+            // CLEAR INPUT FIELDS
+            categoryTextField.clear();
+            descriptionTextField.clear();
+            startDatePicker.setValue(null);
+            endDatePicker.setValue(null);
+            completedCheckBox.setSelected(false);
+            InputItemDialogSingleton.this.hide();
         };
         
         // AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
