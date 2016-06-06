@@ -36,6 +36,8 @@ public class ToDoListController {
     public void processNameUpdate(){
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
+        
+        // UPDATE NAME
         String newName = workspace.getNameTextField().getText();
         dataManager.setName(newName);
     }
@@ -43,19 +45,18 @@ public class ToDoListController {
     public void processOwnerUpdate(){
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
+        
+        // UPDATE OWNER
         String newOwner = workspace.getOwnerTextField().getText();
         dataManager.setOwner(newOwner);
     }
     
     public void processAddItem() {
-        // ENABLE/DISABLE THE PROPER BUTTONS
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        workspace.reloadWorkspace();
-        
-        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // SHOW ADD ITEM PROMPT
+        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
         
         // VERIFY ACTION
@@ -77,13 +78,11 @@ public class ToDoListController {
     }
 
     public void processRemoveItem() {
-        // ENABLE/DISABLE THE PROPER BUTTONS
-        Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        workspace.reloadWorkspace();
+        Workspace workspace = (Workspace)app.getWorkspaceComponent();           
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // PROMPT USER TO CONFIRM REMOVE ITEM 
         RemoveItemDialogSingleton dialog = workspace.getRemoveItemDialog();
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
         dialog.show(props.getProperty(REMOVE_ITEM_TITLE),props.getProperty(REMOVE_ITEM_MESSAGE));
         
         // AND NOW GET THE USER'S SELECTION
@@ -91,9 +90,9 @@ public class ToDoListController {
         // IF THE USER SAID YES, THEN SAVE REMOVE ITEM
         if (selection.equals(YES)){
             // GET SELECTED ITEM TO REMOVE
-            DataManager dataManager = (DataManager)app.getDataComponent();
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+            DataManager dataManager = (DataManager)app.getDataComponent();
             dataManager.removeItem(selectedItem);
         
             // UPDATE THE TABLE AND SIZE
@@ -106,22 +105,19 @@ public class ToDoListController {
     }
     
     public void processMoveUpItem() {
-        // ENABLE/DISABLE THE PROPER BUTTONS
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        workspace.reloadWorkspace();
-        
-        // MOVE ITEM UP
         DataManager dataManager = (DataManager)app.getDataComponent();
+
+        // GET SELECTED ITEM DATA
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        // GET ITEM
         ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
-        // INDICES
         int index = itemsTable.getSelectionModel().getSelectedIndex();
         int previous = index-1;
+        
         // VERIFY VALID ACTION WITHIN BOUNDS
         if (previous>=0){
             ToDoItem previousItem = dataManager.getItems().get(previous);
-            // SWAP DATA
+            // MOVE ITEM UP
             dataManager.getItems().set(previous,selectedItem);
             dataManager.getItems().set(index, previousItem);
         }
@@ -129,24 +125,21 @@ public class ToDoListController {
         // UPDATE THE TABLE
         itemsTable.setItems(dataManager.getItems());
     }
-    //7
+
     public void processMoveDownItem() {
-        // ENABLE/DISABLE THE PROPER BUTTONS
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        workspace.reloadWorkspace();
-        
-        // MOVE ITEM DOWN
         DataManager dataManager = (DataManager)app.getDataComponent();
+
+        // GET SELECTED ITEM DATA
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        // GET ITEM
         ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
-        // INDICES
         int index = itemsTable.getSelectionModel().getSelectedIndex();
         int next = index+1;
+        
         // VERIFY VALID ACTION WITHIN BOUNDS
         if (next<size){
             ToDoItem nextItem = dataManager.getItems().get(next);
-            // SWAP DATA
+            // MOVE ITEM DOWN
             dataManager.getItems().set(next,selectedItem);
             dataManager.getItems().set(index, nextItem);
         }
@@ -154,22 +147,19 @@ public class ToDoListController {
         // UPDATE THE TABLE
         itemsTable.setItems(dataManager.getItems());
     }
-    //8
+
     public void processEditItem() {
-        // ENABLE/DISABLE THE PROPER BUTTONS
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        workspace.reloadWorkspace();
-        
-        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // SHOW EDIT ITEM PROMPT
+        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
         dialog.show(props.getProperty(EDIT_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
 
         // VERIFY ACTION
         String selection = dialog.getSelection();
         if (selection.equals(OK)){
-            // GET SELECTED ITEM TO EDIT
+            // GET SELECTED ITEM DATA
             DataManager dataManager = (DataManager)app.getDataComponent();
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
