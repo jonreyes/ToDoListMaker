@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-import static saf.ui.AppMessageDialogSingleton.singleton;
 
 /**
  * This class serves to present a dialog with three options to
@@ -36,20 +35,8 @@ public class AppYesNoCancelDialogSingleton extends Stage {
     String selection;
     
     // CONSTANT CHOICES
-
-    /**
-     *
-     */
-        public static final String YES = "Yes";
-
-    /**
-     *
-     */
+    public static final String YES = "Yes";
     public static final String NO = "No";
-
-    /**
-     *
-     */
     public static final String CANCEL = "Cancel";
     
     /**
