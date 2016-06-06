@@ -93,7 +93,8 @@ public class Workspace extends AppWorkspaceComponent {
     // HERE ARE OUR DIALOGS
     AppMessageDialogSingleton messageDialog;
     AppYesNoCancelDialogSingleton yesNoCancelDialog;
-    
+    AddItemDialogSingleton addItemDialog;
+            
     // FOR DISPLAYING DEBUG STUFF
     Text debugText;
 
@@ -194,6 +195,28 @@ public class Workspace extends AppWorkspaceComponent {
         workspace.getChildren().add(headingLabel);
         workspace.getChildren().add(detailsBox);
         workspace.getChildren().add(itemsBox);
+        
+        // SETUP DIALOG
+        addItemDialog = AddItemDialogSingleton.getSingleton();
+        addItemDialog.init(gui.getWindow());
+    }
+    
+    /**
+     * An accessor method for getting the singleton object.
+     * 
+     * @return The one singleton dialog of this object type.
+     */
+    public AddItemDialogSingleton getAddItemDialog(){
+        return addItemDialog;
+    }
+    
+    /**
+     * An accessor method for getting the table of items.
+     * 
+     * @return The table of items.
+     */
+    public TableView<ToDoItem> getItemsTable(){
+        return itemsTable;
     }
     
     public void setDebugText(String text) {
@@ -208,10 +231,6 @@ public class Workspace extends AppWorkspaceComponent {
 	// NOW CONNECT THE BUTTONS TO THEIR HANDLERS
         addItemButton.setOnAction(e->{
             toDoListController.processAddItem();
-            // UPDATE TABLE GUI
-            DataManager dataManager = (DataManager)app.getDataComponent();
-            itemsTable.setItems(dataManager.getItems());
-            workspace.getChildren().add(itemsBox);
         });
         removeItemButton.setOnAction(e->{
             toDoListController.processRemoveItem();
@@ -273,6 +292,6 @@ public class Workspace extends AppWorkspaceComponent {
     @Override
     public void reloadWorkspace() {
 	DataManager dataManager = (DataManager)app.getDataComponent();
-
+        
     }
 }

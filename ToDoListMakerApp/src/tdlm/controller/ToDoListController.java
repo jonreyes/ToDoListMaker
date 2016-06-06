@@ -1,5 +1,6 @@
 package tdlm.controller;
 
+import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
@@ -22,19 +23,24 @@ public class ToDoListController {
     }
     //4
     public void processAddItem() {
-        AddItemDialogSingleton dialog = AddItemDialogSingleton.getSingleton();
-        dialog.init(app.getGUI().getWindow());
-        
-	PropertiesManager props = PropertiesManager.getPropertiesManager();
-        
-	// ENABLE/DISABLE THE PROPER BUTTONS
+        // ENABLE/DISABLE THE PROPER BUTTONS
 	Workspace workspace = (Workspace)app.getWorkspaceComponent();
 	workspace.reloadWorkspace();
         
+        AddItemDialogSingleton dialog = workspace.getAddItemDialog();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        // SHOW ADD ITEM PROMPT
         dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(ADD_ITEM_MESSAGE));
+        
+        // ADD NEW ITEM DATA WITH USER INPUT 
         ToDoItem newItem = dialog.getItem();
         DataManager dataManager = (DataManager)app.getDataComponent();
         if (newItem != null) dataManager.addItem(newItem);
+        
+        // UPDATE TABLE
+        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+        itemsTable.setItems(dataManager.getItems());
     }
     //5
     public void processRemoveItem() {
