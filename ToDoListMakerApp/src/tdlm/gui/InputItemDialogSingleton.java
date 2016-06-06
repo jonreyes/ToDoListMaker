@@ -92,7 +92,16 @@ public class InputItemDialogSingleton extends Stage {
     }
     
     /**
-     * An accessor method for getting the item to be added.
+     * An accessor method for getting the selection
+     * 
+     * @return The user selection when this dialog was presented.
+     */
+    public String getSelection(){
+        return selection;
+    }
+    
+    /**
+     * An accessor method for getting the new item created.
      * 
      * @return The new item to be added.
      */
