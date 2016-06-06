@@ -66,6 +66,10 @@ public class DataManager implements AppDataComponent {
     public void addItem(ToDoItem item) {
         items.add(item);
     }
+    
+    public void removeItem(ToDoItem item){
+        items.remove(item);
+    }
 
     /**
      * 

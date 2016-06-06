@@ -223,6 +223,31 @@ public class Workspace extends AppWorkspaceComponent {
 	debugText.setText(text);
     }
     
+    /**
+     * This method is used to activate/deactivate table buttons when
+     * they can and cannot be used so as to provide foolproof design.
+     * 
+     * @param size Describes the number of items in the table
+     */
+    public void updateTableControls(int size) {
+        // REMOVE BUTTONS ALWAYS ENABLED
+        // ONCE FIRST ITEM ADDED
+	if (size>0) removeItemButton.setDisable(false);
+        else{removeItemButton.setDisable(true);}
+        
+        // REMOVE BUTTONS ALWAYS ENABLED
+        // ONCE MORE THAN ONE ITEM ADDED
+        if (size>1){
+            moveUpItemButton.setDisable(false);
+            moveDownItemButton.setDisable(false);
+        }
+        else{
+            moveUpItemButton.setDisable(true);
+            moveDownItemButton.setDisable(true);
+        }
+        // NOTE THAT ADD ITEM BUTTON
+        // IS NEVER DISABLED SO WE NEVER HAVE TO TOUCH IT
+    }
     
     private void setupHandlers() {
 	// MAKE THE CONTROLLER

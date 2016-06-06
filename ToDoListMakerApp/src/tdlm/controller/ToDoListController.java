@@ -18,7 +18,12 @@ import tdlm.data.ToDoItem;
 public class ToDoListController {
     AppTemplate app;
     
+    // WE WANT TO KEEP TRACK OF ITEMS IN TABLE
+    int size;
+    
     public ToDoListController(AppTemplate initApp) {
+        // NOTHING YET
+        size = 0;
 	app = initApp;
     }
     //4
@@ -38,13 +43,28 @@ public class ToDoListController {
         DataManager dataManager = (DataManager)app.getDataComponent();
         if (newItem != null) dataManager.addItem(newItem);
         
-        // UPDATE TABLE
+        // UPDATE THE TABLE AND SIZE
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
         itemsTable.setItems(dataManager.getItems());
+        size = dataManager.getItems().size();
+        
+        // ENABLE AND DISABLE APPROPRIATE CONTROLS
+        workspace.updateTableControls(size);
     }
     //5
     public void processRemoveItem() {
+         // ENABLE/DISABLE THE PROPER BUTTONS
+	Workspace workspace = (Workspace)app.getWorkspaceComponent();
+	workspace.reloadWorkspace();
         
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+        dataManager.removeItem(itemsTable.getSelectionModel().getSelectedItem());
+        itemsTable.setItems(dataManager.getItems());
+        size = dataManager.getItems().size();
+        
+        // ENABLE AND DISABLE APPROPRIATE CONTROLS
+        workspace.updateTableControls(size);
     }
     //6
     public void processMoveUpItem() {
