@@ -25,7 +25,8 @@ import tdlm.data.DataManager;
 import tdlm.data.ToDoItem;
 
 /**
- *
+ * This class serves to present an Add Item input dialog.
+ * 
  * @author Jon Reyes
  */
 public class AddItemDialogSingleton extends Stage {

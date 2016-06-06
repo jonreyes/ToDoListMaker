@@ -123,8 +123,6 @@ public class RemoveItemDialogSingleton extends Stage{
      * @param title The title to appear in the dialog window bar.
      * 
      * @param message Message to appear inside the dialog.
-     * 
-     * @return The button selection source of action.
      */
     public void show(String title, String message) {
 	// SET THE DIALOG TITLE BAR TITLE
