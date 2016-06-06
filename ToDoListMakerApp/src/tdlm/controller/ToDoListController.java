@@ -6,8 +6,9 @@ import tdlm.gui.Workspace;
 import saf.AppTemplate;
 import static saf.ui.AppYesNoCancelDialogSingleton.YES;
 import tdlm.gui.InputItemDialogSingleton;
-import static tdlm.PropertyType.ADD_ITEM_MESSAGE;
+import static tdlm.PropertyType.INPUT_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
+import static tdlm.PropertyType.EDIT_ITEM_TITLE;
 import static tdlm.PropertyType.REMOVE_ITEM_MESSAGE;
 import static tdlm.PropertyType.REMOVE_ITEM_TITLE;
 import tdlm.data.DataManager;
@@ -55,7 +56,7 @@ public class ToDoListController {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // SHOW ADD ITEM PROMPT
-        dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(ADD_ITEM_MESSAGE));
+        dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
         
         // VERIFY ACTION
         String selection = dialog.getSelection();
@@ -163,7 +164,7 @@ public class ToDoListController {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // SHOW EDIT ITEM PROMPT
-        dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(ADD_ITEM_MESSAGE));
+        dialog.show(props.getProperty(EDIT_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
 
         // VERIFY ACTION
         String selection = dialog.getSelection();
