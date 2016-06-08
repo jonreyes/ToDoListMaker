@@ -250,21 +250,22 @@ public class Workspace extends AppWorkspaceComponent {
     /**
      * This method is used to activate/deactivate table buttons when
      * they can and cannot be used so as to provide foolproof design.
-     * 
-     * @param size Describes the number of items in the table
      */
-    public void updateTableControls(int size) {
+    public void updateTableControls() {
         // REMOVE BUTTONS ENABLED
         // ONCE FIRST ITEM ADDED AND SELECTED
-        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
-	if (selectedItem!=null && size>0) removeItemButton.setDisable(false);
-        else{removeItemButton.setDisable(true);}
+        int size = itemsTable.getItems().size();
+        int index = itemsTable.getSelectionModel().getSelectedIndex();
+        if (index>=0 && size>0) removeItemButton.setDisable(false);
+        else removeItemButton.setDisable(true);
         
         // MOVE BUTTONS ENABLED
-        // ONCE MORE THAN ONE ITEM ADDED
-        if (size>1){
-            moveUpItemButton.setDisable(false);
-            moveDownItemButton.setDisable(false);
+        // ONCE SELECTED AND MORE THAN ONE ITEM ADDED
+        if (index>=0 && size>1){
+            if (index>0) moveUpItemButton.setDisable(false);
+            else moveUpItemButton.setDisable(true);
+            if (index<size-1) moveDownItemButton.setDisable(false);
+            else moveDownItemButton.setDisable(true);
         }
         else{
             moveUpItemButton.setDisable(true);
@@ -296,6 +297,9 @@ public class Workspace extends AppWorkspaceComponent {
         });
         moveDownItemButton.setOnAction(e->{
             toDoListController.processMoveDownItem();
+        });
+        itemsTable.setOnMouseClicked(e->{
+            updateTableControls();
         });
         itemsTable.setRowFactory(e->{
             return toDoListController.processEditItem();

@@ -25,12 +25,7 @@ import tdlm.gui.RemoveItemDialogSingleton;
 public class ToDoListController {
     AppTemplate app;
     
-    // WE WANT TO KEEP TRACK OF ITEMS IN TABLE
-    int size;
-    
     public ToDoListController(AppTemplate initApp) {
-        // NOTHING YET
-        size = 0;
         app = initApp;
     }
     
@@ -71,7 +66,6 @@ public class ToDoListController {
             // UPDATE THE TABLE AND SIZE
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             itemsTable.setItems(dataManager.getItems());
-            size = dataManager.getItems().size();
         
             // CLEAR INPUT FIELDS
             dialog.getCategoryTextField().clear();
@@ -81,7 +75,7 @@ public class ToDoListController {
             dialog.getCompletedCheckBox().setSelected(false);
             
             // ENABLE AND DISABLE APPROPRIATE CONTROLS
-            workspace.updateTableControls(size);
+            workspace.updateTableControls();
         }
     }
 
@@ -105,10 +99,9 @@ public class ToDoListController {
         
             // UPDATE THE TABLE AND SIZE
             itemsTable.setItems(dataManager.getItems());
-            size = dataManager.getItems().size();
         
             // ENABLE AND DISABLE APPROPRIATE CONTROLS
-            workspace.updateTableControls(size);
+            workspace.updateTableControls();
         }
     }
     
@@ -118,20 +111,20 @@ public class ToDoListController {
 
         // GET SELECTED ITEM DATA
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
         int index = itemsTable.getSelectionModel().getSelectedIndex();
         int previous = index-1;
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        ToDoItem previousItem = dataManager.getItems().get(previous);
         
-        // VERIFY VALID ACTION WITHIN BOUNDS
-        if (previous>=0){
-            ToDoItem previousItem = dataManager.getItems().get(previous);
-            // MOVE ITEM UP
-            dataManager.getItems().set(previous,selectedItem);
-            dataManager.getItems().set(index, previousItem);
-        }
-        
+        // MOVE ITEM UP
+        dataManager.getItems().set(previous,selectedItem);
+        dataManager.getItems().set(index, previousItem);
+           
         // UPDATE THE TABLE
         itemsTable.setItems(dataManager.getItems());
+        
+        // ENABLE AND DISABLE APPROPRIATE CONTROLS
+        workspace.updateTableControls();
     }
 
     public void processMoveDownItem() {
@@ -140,20 +133,20 @@ public class ToDoListController {
 
         // GET SELECTED ITEM DATA
         TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
         int index = itemsTable.getSelectionModel().getSelectedIndex();
         int next = index+1;
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        ToDoItem nextItem = dataManager.getItems().get(next);
         
-        // VERIFY VALID ACTION WITHIN BOUNDS
-        if (next<size){
-            ToDoItem nextItem = dataManager.getItems().get(next);
-            // MOVE ITEM DOWN
-            dataManager.getItems().set(next,selectedItem);
-            dataManager.getItems().set(index, nextItem);
-        }
+        // MOVE ITEM DOWN
+        dataManager.getItems().set(next,selectedItem);
+        dataManager.getItems().set(index, nextItem);
         
         // UPDATE THE TABLE
         itemsTable.setItems(dataManager.getItems());
+        
+        // ENABLE AND DISABLE APPROPRIATE CONTROLS
+        workspace.updateTableControls();
     }
 
      public TableRow<ToDoItem> processEditItem(){
