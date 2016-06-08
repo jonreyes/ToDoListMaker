@@ -297,12 +297,8 @@ public class Workspace extends AppWorkspaceComponent {
         moveDownItemButton.setOnAction(e->{
             toDoListController.processMoveDownItem();
         });
-        itemsTable.setOnMouseClicked(e -> {
-            if (e.getClickCount() == 2) {
-                toDoListController.processEditItem();
-            }
-            // ENABLE AND DISABLE APPROPRIATE CONTROLS
-            updateTableControls(itemsTable.getItems().size());
+        itemsTable.setRowFactory(e->{
+            return toDoListController.processEditItem();
         });
     }
     

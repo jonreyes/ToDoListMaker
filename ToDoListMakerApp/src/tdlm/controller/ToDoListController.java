@@ -1,5 +1,6 @@
 package tdlm.controller;
 
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
@@ -155,36 +156,42 @@ public class ToDoListController {
         itemsTable.setItems(dataManager.getItems());
     }
 
-    public void processEditItem() {
-        Workspace workspace = (Workspace)app.getWorkspaceComponent();
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        
-        // GET SELECTED ITEM DATA
-        DataManager dataManager = (DataManager)app.getDataComponent();
-        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
-        
-        // EDIT ITEM PROMPT
-        InputItemDialogSingleton dialog = workspace.getInputItemDialog();
-        // SET INPUT FIELDS
-        dialog.getCategoryTextField().setText(selectedItem.getCategory());
-        dialog.getDescriptionTextField().setText(selectedItem.getDescription());
-        dialog.getStartDatePicker().setValue(selectedItem.getStartDate());
-        dialog.getEndDatePicker().setValue(selectedItem.getEndDate());
-        dialog.getCompletedCheckBox().setSelected(selectedItem.getCompleted());
-        // SHOW
-        dialog.show(props.getProperty(EDIT_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
+     public TableRow<ToDoItem> processEditItem(){
+        TableRow<ToDoItem> itemRow = new TableRow<>();
+        itemRow.setOnMouseClicked(e->{
+            if (e.getClickCount() == 2 && (! itemRow.isEmpty())){
+                Workspace workspace = (Workspace)app.getWorkspaceComponent();
+                PropertiesManager props = PropertiesManager.getPropertiesManager();
+                DataManager dataManager = (DataManager)app.getDataComponent();
+                
+                // GET SELECTED ITEM DATA
+                ToDoItem selectedItem = itemRow.getItem();
 
-        // VERIFY ACTION
-        String selection = dialog.getSelection();
-        if (selection.equals(OK)){
-            // MODIFY SELECTED ITEM IN LIST
-            int selectedItemIndex = dataManager.getItems().indexOf(selectedItem);
-            ToDoItem newItem = dialog.getItem();
-            dataManager.getItems().set(selectedItemIndex,newItem);
-            
-            // UPDATE THE TABLE
-            itemsTable.setItems(dataManager.getItems());
-        }
-    }
+                // EDIT ITEM PROMPT
+                InputItemDialogSingleton dialog = workspace.getInputItemDialog();
+                // SET INPUT FIELDS
+                dialog.getCategoryTextField().setText(selectedItem.getCategory());
+                dialog.getDescriptionTextField().setText(selectedItem.getDescription());
+                dialog.getStartDatePicker().setValue(selectedItem.getStartDate());
+                dialog.getEndDatePicker().setValue(selectedItem.getEndDate());
+                dialog.getCompletedCheckBox().setSelected(selectedItem.getCompleted());
+                // SHOW
+                dialog.show(props.getProperty(EDIT_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
+                
+                // VERIFY ACTION
+                String selection = dialog.getSelection();
+                if (selection.equals(OK)){
+                    // MODIFY SELECTED ITEM IN LIST
+                    int selectedItemIndex = dataManager.getItems().indexOf(selectedItem);
+                    ToDoItem newItem = dialog.getItem();
+                    dataManager.getItems().set(selectedItemIndex,newItem);
+
+                    // UPDATE THE TABLE
+                    TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+                    itemsTable.setItems(dataManager.getItems());
+                }
+            }
+        });
+        return itemRow;
+     }
 }
