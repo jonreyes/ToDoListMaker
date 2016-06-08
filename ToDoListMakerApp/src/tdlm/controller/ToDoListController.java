@@ -72,6 +72,13 @@ public class ToDoListController {
             itemsTable.setItems(dataManager.getItems());
             size = dataManager.getItems().size();
         
+            // CLEAR INPUT FIELDS
+            dialog.getCategoryTextField().clear();
+            dialog.getDescriptionTextField().clear();
+            dialog.getStartDatePicker().setValue(null);
+            dialog.getEndDatePicker().setValue(null);
+            dialog.getCompletedCheckBox().setSelected(false);
+            
             // ENABLE AND DISABLE APPROPRIATE CONTROLS
             workspace.updateTableControls(size);
         }
@@ -152,20 +159,27 @@ public class ToDoListController {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
-        // SHOW EDIT ITEM PROMPT
+        // GET SELECTED ITEM DATA
+        DataManager dataManager = (DataManager)app.getDataComponent();
+        TableView<ToDoItem> itemsTable = workspace.getItemsTable();
+        ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
+        
+        // EDIT ITEM PROMPT
         InputItemDialogSingleton dialog = workspace.getInputItemDialog();
+        // SET INPUT FIELDS
+        dialog.getCategoryTextField().setText(selectedItem.getCategory());
+        dialog.getDescriptionTextField().setText(selectedItem.getDescription());
+        dialog.getStartDatePicker().setValue(selectedItem.getStartDate());
+        dialog.getEndDatePicker().setValue(selectedItem.getEndDate());
+        dialog.getCompletedCheckBox().setSelected(selectedItem.getCompleted());
+        // SHOW
         dialog.show(props.getProperty(EDIT_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
 
         // VERIFY ACTION
         String selection = dialog.getSelection();
         if (selection.equals(OK)){
-            // GET SELECTED ITEM DATA
-            DataManager dataManager = (DataManager)app.getDataComponent();
-            TableView<ToDoItem> itemsTable = workspace.getItemsTable();
-            ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
-            int selectedItemIndex = dataManager.getItems().indexOf(selectedItem);
-            
             // MODIFY SELECTED ITEM IN LIST
+            int selectedItemIndex = dataManager.getItems().indexOf(selectedItem);
             ToDoItem newItem = dialog.getItem();
             dataManager.getItems().set(selectedItemIndex,newItem);
             

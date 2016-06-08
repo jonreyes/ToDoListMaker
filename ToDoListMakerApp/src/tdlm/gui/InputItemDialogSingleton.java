@@ -89,6 +89,51 @@ public class InputItemDialogSingleton extends Stage {
 	return singleton;
     }
     
+   /**
+     * An accessor method for getting the TextField object
+     * 
+     * @return The TextField object of this type.
+     */
+    public TextField getCategoryTextField(){
+        return categoryTextField;
+    }
+    
+    /**
+     * An accessor method for getting the TextField object
+     * 
+     * @return The TextField object of this type.
+     */
+    public TextField getDescriptionTextField(){
+        return descriptionTextField;
+    }
+    
+    /**
+     * An accessor method for getting the DatePicker object
+     * 
+     * @return The DatePicker object of this type.
+     */
+    public DatePicker getStartDatePicker(){
+        return startDatePicker;
+    }
+    
+    /**
+     * An accessor method for getting the DatePicker object
+     * 
+     * @return The DatePicker object of this type.
+     */
+    public DatePicker getEndDatePicker(){
+        return endDatePicker;
+    }
+    
+    /**
+     * An accessor method for getting the CheckBox object
+     * 
+     * @return The CheckBox object of this type.
+     */
+    public CheckBox getCompletedCheckBox(){
+        return completedCheckBox;
+    }
+    
     /**
      * An accessor method for getting the selection
      * 
@@ -160,13 +205,7 @@ public class InputItemDialogSingleton extends Stage {
                     endDatePicker.getValue(),
                     completedCheckBox.isSelected()
                 );
-            }
-            // CLEAR INPUT FIELDS
-            categoryTextField.clear();
-            descriptionTextField.clear();
-            startDatePicker.setValue(null);
-            endDatePicker.setValue(null);
-            completedCheckBox.setSelected(false);
+            }            
             InputItemDialogSingleton.this.hide();
         };
         
