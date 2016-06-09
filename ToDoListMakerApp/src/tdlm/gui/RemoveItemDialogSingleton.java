@@ -16,9 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import properties_manager.PropertiesManager;
-import static saf.settings.AppStartupConstants.NO;
-import static saf.settings.AppStartupConstants.YES;
+import static saf.ui.AppYesNoCancelDialogSingleton.NO;
+import static saf.ui.AppYesNoCancelDialogSingleton.YES;
 
 /**
  * This class serves to present a Remove Item confirmation dialog
@@ -72,9 +71,8 @@ public class RemoveItemDialogSingleton extends Stage{
         messageLabel = new Label();        
 
         // YES, NO, AND CANCEL BUTTONS
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
-        yesButton = new Button(props.getProperty(YES));
-        noButton = new Button(props.getProperty(NO));
+        yesButton = new Button(YES);
+        noButton = new Button(NO);
 	
 	// MAKE THE EVENT HANDLER FOR THESE BUTTONS
         EventHandler yesNoCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {

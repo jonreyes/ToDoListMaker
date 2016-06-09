@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import properties_manager.PropertiesManager;
 import saf.AppTemplate;
-import static saf.settings.AppStartupConstants.CANCEL;
 import static saf.settings.AppPropertyType.LOAD_ERROR_MESSAGE;
 import static saf.settings.AppPropertyType.LOAD_ERROR_TITLE;
 import static saf.settings.AppPropertyType.LOAD_WORK_TITLE;
@@ -28,8 +27,9 @@ import static saf.settings.AppPropertyType.SAVE_ERROR_TITLE;
 import static saf.settings.AppPropertyType.SAVE_UNSAVED_WORK_MESSAGE;
 import static saf.settings.AppPropertyType.SAVE_UNSAVED_WORK_TITLE;
 import static saf.settings.AppPropertyType.SAVE_WORK_TITLE;
-import static saf.settings.AppStartupConstants.YES;
 import static saf.settings.AppStartupConstants.PATH_WORK;
+import static saf.ui.AppYesNoCancelDialogSingleton.CANCEL;
+import static saf.ui.AppYesNoCancelDialogSingleton.YES;
 
 /**
  * This class provides the event programmed responses for the file controls
@@ -257,7 +257,7 @@ public class AppFileController {
         String selection = yesNoDialog.getSelection();
 
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
-        if (selection.equals(props.getProperty(YES))) {
+        if (selection.equals(YES)) {
             // SAVE THE DATA FILE
             AppDataComponent dataManager = app.getDataComponent();
 	    
@@ -281,7 +281,7 @@ public class AppFileController {
 	    }
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE
-        else if (selection.equals(props.getProperty(CANCEL))) {
+        else if (selection.equals(CANCEL)) {
             return false;
         }
 

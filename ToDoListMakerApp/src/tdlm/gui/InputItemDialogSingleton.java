@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
-import static saf.settings.AppStartupConstants.CANCEL;
+import static saf.ui.AppYesNoCancelDialogSingleton.CANCEL;
 import static tdlm.PropertyType.CATEGORY_LABEL;
 import static tdlm.PropertyType.COMPLETED_LABEL;
 import static tdlm.PropertyType.DESCRIPTION_LABEL;

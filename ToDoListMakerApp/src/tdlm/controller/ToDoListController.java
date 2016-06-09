@@ -6,8 +6,7 @@ import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
-import static saf.settings.AppStartupConstants.YES;
-import tdlm.PropertyType;
+import static saf.ui.AppYesNoCancelDialogSingleton.YES;
 import tdlm.gui.InputItemDialogSingleton;
 import static tdlm.PropertyType.INPUT_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
@@ -109,7 +108,7 @@ public class ToDoListController {
         // AND NOW GET THE USER'S SELECTION
         String selection = dialog.getSelection();
         // IF THE USER SAID YES, THEN SAVE REMOVE ITEM
-        if (selection.equals(props.getProperty(YES))){
+        if (selection.equals(YES)){
             // GET SELECTED ITEM TO REMOVE
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();

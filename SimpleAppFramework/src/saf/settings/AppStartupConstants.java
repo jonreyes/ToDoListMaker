@@ -26,8 +26,4 @@ public class AppStartupConstants
     // ERROR DIALOG CONTROL
     public static String CLOSE = "Close";
     
-    // CONSTANT CHOICES
-    public static final String YES = "Yes";
-    public static final String NO = "No";
-    public static final String CANCEL = "Cancel";
 }
