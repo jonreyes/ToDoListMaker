@@ -47,7 +47,6 @@ public enum PropertyType {
     START_LABEL,
     END_LABEL,
     COMPLETED_LABEL,
-    OK_BUTTON_LABEL,
-    CANCEL_BUTTON_LABEL
-
+    
+    OK
 }

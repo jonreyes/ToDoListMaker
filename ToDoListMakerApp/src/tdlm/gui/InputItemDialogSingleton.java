@@ -20,6 +20,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import properties_manager.PropertiesManager;
+import static saf.settings.AppStartupConstants.CANCEL;
+import static tdlm.PropertyType.CATEGORY_LABEL;
+import static tdlm.PropertyType.COMPLETED_LABEL;
+import static tdlm.PropertyType.DESCRIPTION_LABEL;
+import static tdlm.PropertyType.END_LABEL;
+import static tdlm.PropertyType.OK;
+import static tdlm.PropertyType.START_LABEL;
 import tdlm.data.ToDoItem;
 
 /**
@@ -60,15 +68,6 @@ public class InputItemDialogSingleton extends Stage {
     
     String selection;
     ToDoItem newItem;
-    
-    // CONSTANT COMPONENT LABELS
-    public static final String CATEGORY_LABEL = "Category:";
-    public static final String DESCRIPTION_LABEL = "Description:";
-    public static final String START_LABEL = "Start Date:";
-    public static final String END_LABEL = "End Date:";
-    public static final String COMPLETED_LABEL = "Completed?";
-    public static final String OK = "OK";
-    public static final String CANCEL = "Cancel";
     
      /**
      * Note that the constructor is private since it follows
@@ -158,6 +157,7 @@ public class InputItemDialogSingleton extends Stage {
      * @param owner The window above which this dialog will be centered.
      */
     public void init(Stage owner) {
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
@@ -167,28 +167,28 @@ public class InputItemDialogSingleton extends Stage {
         messageLabel = new Label();
         
         // CATEGORY INPUT
-        categoryLabel = new Label(CATEGORY_LABEL);
+        categoryLabel = new Label(props.getProperty(CATEGORY_LABEL));
         categoryTextField = new TextField();
         
         // DESCRIPTION INPUT
-        descriptionLabel = new Label(DESCRIPTION_LABEL);
+        descriptionLabel = new Label(props.getProperty(DESCRIPTION_LABEL));
         descriptionTextField = new TextField();
         
         // START DATE INPUT
-        startLabel = new Label(START_LABEL);
+        startLabel = new Label(props.getProperty(START_LABEL));
         startDatePicker = new DatePicker();
         
         // END DATE INPUT
-        endLabel = new Label(END_LABEL);
+        endLabel = new Label(props.getProperty(END_LABEL));
         endDatePicker = new DatePicker();
         
         // COMPLETED INPUT
-        completedCheckBox = new CheckBox(COMPLETED_LABEL);
+        completedCheckBox = new CheckBox(props.getProperty(COMPLETED_LABEL));
         
         // OK AND CANCEL CONTROLS
         controlBox = new HBox();
         controlBox.setAlignment(Pos.CENTER);
-        okButton = new Button(OK);
+        okButton = new Button(props.getProperty(OK));
         cancelButton = new Button(CANCEL);
         controlBox.getChildren().addAll(okButton,cancelButton);
         
@@ -196,7 +196,7 @@ public class InputItemDialogSingleton extends Stage {
         EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
             Button sourceButton = (Button)ae.getSource();
             InputItemDialogSingleton.this.selection = sourceButton.getText();
-            if (InputItemDialogSingleton.this.selection.equals(OK)){
+            if (InputItemDialogSingleton.this.selection.equals(props.getProperty(OK))){
                 // CREATE NEW ITEM FROM INPUT
                 newItem = new ToDoItem(
                     categoryTextField.getText(),

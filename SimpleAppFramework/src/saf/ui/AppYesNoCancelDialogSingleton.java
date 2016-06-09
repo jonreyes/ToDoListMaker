@@ -11,6 +11,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
+import static saf.settings.AppStartupConstants.CANCEL;
+import static saf.settings.AppStartupConstants.NO;
+import static saf.settings.AppStartupConstants.YES;
 
 /**
  * This class serves to present a dialog with three options to
@@ -33,11 +36,6 @@ public class AppYesNoCancelDialogSingleton extends Stage {
     Button noButton;
     Button cancelButton;
     String selection;
-    
-    // CONSTANT CHOICES
-    public static final String YES = "Yes";
-    public static final String NO = "No";
-    public static final String CANCEL = "Cancel";
     
     /**
      * Note that the constructor is private since it follows

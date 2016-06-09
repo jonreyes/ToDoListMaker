@@ -31,7 +31,6 @@
         <property name="START_DATE_COLUMN_HEADING"      value="Start Date"></property>
         <property name="END_DATE_COLUMN_HEADING"        value="End Date"></property>
         <property name="COMPLETED_COLUMN_HEADING"       value="Completed"></property>
-        
                
 	<!-- ERROR MESSAGES AND TITLES FOR THEIR DIALOGS -->
 	<property name="ATTRIBUTE_UPDATE_ERROR_MESSAGE"	    value="WARNING: An error occured updating the element's attribute."></property>
@@ -47,6 +46,13 @@
         <property name="REMOVE_ITEM_TITLE"          value="Remove Item"></property>
         <property name="REMOVE_ITEM_MESSAGE"        value="Are you sure you want to remove the selected item data?"></property>
         
+        <property name="CATEGORY_LABEL"     value="Category:"></property>
+        <property name="DESCRIPTION_LABEL"  value="Description:"></property>
+        <property name="START_LABEL"        value="Start Date:"></property>
+        <property name="END_LABEL"          value="End Date:"></property>
+        <property name="COMPLETED_LABEL"    value="Completed?"></property>
+        
+        <property name="OK"                 value="OK"></property>
     </property_list>
     <property_options_list>
     </property_options_list>

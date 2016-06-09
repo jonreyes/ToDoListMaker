@@ -36,9 +36,7 @@ public class DataManager implements AppDataComponent {
     public DataManager(AppTemplate initApp) throws Exception {
 	// KEEP THE APP FOR LATER
 	app = initApp;
-        name = new SimpleStringProperty();
-        owner = new SimpleStringProperty();
-        items = FXCollections.observableArrayList();
+        this.reset();
     }
    
     public ObservableList<ToDoItem> getItems() {
@@ -74,5 +72,8 @@ public class DataManager implements AppDataComponent {
      */
     @Override
     public void reset() {
+        name = new SimpleStringProperty();
+        owner = new SimpleStringProperty();
+        items = FXCollections.observableArrayList();
     }
 }

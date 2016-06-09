@@ -131,7 +131,9 @@ public class FileManager implements AppFileComponent {
 	// LOAD LIST NAME AND OWNER
 	String name = json.getString(JSON_NAME);
 	String owner = json.getString(JSON_OWNER);
-	
+	dataManager.setName(name);
+        dataManager.setOwner(owner);
+        
 	// AND NOW LOAD ALL THE ITEMS
 	JsonArray jsonItemArray = json.getJsonArray(JSON_ITEMS);
 	for (int i = 0; i < jsonItemArray.size(); i++) {

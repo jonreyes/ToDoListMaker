@@ -11,6 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import properties_manager.PropertiesManager;
 import saf.AppTemplate;
+import static saf.settings.AppStartupConstants.CANCEL;
 import static saf.settings.AppPropertyType.LOAD_ERROR_MESSAGE;
 import static saf.settings.AppPropertyType.LOAD_ERROR_TITLE;
 import static saf.settings.AppPropertyType.LOAD_WORK_TITLE;
@@ -27,6 +28,7 @@ import static saf.settings.AppPropertyType.SAVE_ERROR_TITLE;
 import static saf.settings.AppPropertyType.SAVE_UNSAVED_WORK_MESSAGE;
 import static saf.settings.AppPropertyType.SAVE_UNSAVED_WORK_TITLE;
 import static saf.settings.AppPropertyType.SAVE_WORK_TITLE;
+import static saf.settings.AppStartupConstants.YES;
 import static saf.settings.AppStartupConstants.PATH_WORK;
 
 /**
@@ -255,7 +257,7 @@ public class AppFileController {
         String selection = yesNoDialog.getSelection();
 
         // IF THE USER SAID YES, THEN SAVE BEFORE MOVING ON
-        if (selection.equals(AppYesNoCancelDialogSingleton.YES)) {
+        if (selection.equals(props.getProperty(YES))) {
             // SAVE THE DATA FILE
             AppDataComponent dataManager = app.getDataComponent();
 	    
@@ -279,7 +281,7 @@ public class AppFileController {
 	    }
         } // IF THE USER SAID CANCEL, THEN WE'LL TELL WHOEVER
         // CALLED THIS THAT THE USER IS NOT INTERESTED ANYMORE
-        else if (selection.equals(AppYesNoCancelDialogSingleton.CANCEL)) {
+        else if (selection.equals(props.getProperty(CANCEL))) {
             return false;
         }
 
@@ -313,7 +315,7 @@ public class AppFileController {
                 fileManager.loadData(dataManager, selectedFile.getAbsolutePath());
                 app.getWorkspaceComponent().reloadWorkspace();
 
-		// MAKE SURE THE WORKSPACE IS ACTIVATED
+                // MAKE SURE THE WORKSPACE IS ACTIVATED
 		app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
                 saved = true;
                 app.getGUI().updateToolbarControls(saved);

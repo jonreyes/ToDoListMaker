@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Modality;
-import static saf.settings.AppStartupConstants.CLOSE_BUTTON_LABEL;
+import static saf.settings.AppStartupConstants.CLOSE;
 
 /**
  * This class serves to present custom text messages to the user when
@@ -65,7 +65,7 @@ public class AppMessageDialogSingleton extends Stage {
         messageLabel = new Label();        
 
         // CLOSE BUTTON
-        closeButton = new Button(CLOSE_BUTTON_LABEL);
+        closeButton = new Button(CLOSE);
         closeButton.setOnAction(e->{ AppMessageDialogSingleton.this.close(); });
 
         // WE'LL PUT EVERYTHING HERE

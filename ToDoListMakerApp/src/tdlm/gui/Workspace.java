@@ -25,6 +25,24 @@ import saf.components.AppWorkspaceComponent;
 import static saf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static saf.settings.AppStartupConstants.PATH_IMAGES;
 import tdlm.PropertyType;
+import static tdlm.PropertyType.ADD_ICON;
+import static tdlm.PropertyType.ADD_ITEM_TOOLTIP;
+import static tdlm.PropertyType.CATEGORY_COLUMN_HEADING;
+import static tdlm.PropertyType.COMPLETED_COLUMN_HEADING;
+import static tdlm.PropertyType.DESCRIPTION_COLUMN_HEADING;
+import static tdlm.PropertyType.DETAILS_HEADING_LABEL;
+import static tdlm.PropertyType.END_DATE_COLUMN_HEADING;
+import static tdlm.PropertyType.ITEMS_HEADING_LABEL;
+import static tdlm.PropertyType.MOVE_DOWN_ICON;
+import static tdlm.PropertyType.MOVE_DOWN_ITEM_TOOLTIP;
+import static tdlm.PropertyType.MOVE_UP_ICON;
+import static tdlm.PropertyType.MOVE_UP_ITEM_TOOLTIP;
+import static tdlm.PropertyType.NAME_PROMPT;
+import static tdlm.PropertyType.OWNER_PROMPT;
+import static tdlm.PropertyType.REMOVE_ICON;
+import static tdlm.PropertyType.REMOVE_ITEM_TOOLTIP;
+import static tdlm.PropertyType.START_DATE_COLUMN_HEADING;
+import static tdlm.PropertyType.WORKSPACE_HEADING_LABEL;
 import tdlm.data.ToDoItem;
 
 /**
@@ -118,15 +136,16 @@ public class Workspace extends AppWorkspaceComponent {
     
     private void layoutGUI() {
         PropertiesManager props = PropertiesManager.getPropertiesManager();
+        DataManager dataManager = (DataManager)app.getDataComponent();
         
 	// FIRST THE LABEL AT THE TOP
         headingLabel = new Label();
-        headingLabel.setText(props.getProperty(PropertyType.WORKSPACE_HEADING_LABEL));        
+        headingLabel.setText(props.getProperty(WORKSPACE_HEADING_LABEL));        
 
         // THEN THE TODO LIST DETAILS
         detailsBox = new VBox();
         detailsLabel = new Label();
-        detailsLabel.setText(props.getProperty(PropertyType.DETAILS_HEADING_LABEL));
+        detailsLabel.setText(props.getProperty(DETAILS_HEADING_LABEL));
         
         // THIS WILL CONTAIN BOTH
         nameAndOwnerBox = new HBox();
@@ -134,14 +153,16 @@ public class Workspace extends AppWorkspaceComponent {
         // THIS JUST THE NAME
         nameBox = new HBox();
         nameLabel = new Label();
-        nameLabel.setText(props.getProperty(PropertyType.NAME_PROMPT));
+        nameLabel.setText(props.getProperty(NAME_PROMPT));
         nameTextField = new TextField();
+        nameTextField.setText(dataManager.getName());
         nameBox.getChildren().addAll(nameLabel, nameTextField);
 
         // THIS JUST THE OWNER
         ownerBox = new HBox();
-        ownerLabel = new Label(props.getProperty(PropertyType.OWNER_PROMPT));
+        ownerLabel = new Label(props.getProperty(OWNER_PROMPT));
         ownerTextField = new TextField();
+        ownerTextField.setText(dataManager.getOwner());
         ownerBox.getChildren().addAll(ownerLabel, ownerTextField);
         
         // ARRANGE THE CONTENTS OF BOTH ON A SINGLE LINE
@@ -153,23 +174,23 @@ public class Workspace extends AppWorkspaceComponent {
  
         // NOW THE CONTROLS FOR ADDING LECTURES
         itemsBox = new VBox();
-        itemsLabel = new Label(props.getProperty(PropertyType.ITEMS_HEADING_LABEL));
+        itemsLabel = new Label(props.getProperty(ITEMS_HEADING_LABEL));
         itemsToolbar = new HBox();
-        addItemButton = gui.initChildButton(itemsToolbar, PropertyType.ADD_ICON.toString(), PropertyType.ADD_ITEM_TOOLTIP.toString(), false);
-        removeItemButton = gui.initChildButton(itemsToolbar, PropertyType.REMOVE_ICON.toString(), PropertyType.REMOVE_ITEM_TOOLTIP.toString(), true);
-        moveUpItemButton = gui.initChildButton(itemsToolbar, PropertyType.MOVE_UP_ICON.toString(), PropertyType.MOVE_UP_ITEM_TOOLTIP.toString(), true);
-        moveDownItemButton = gui.initChildButton(itemsToolbar, PropertyType.MOVE_DOWN_ICON.toString(), PropertyType.MOVE_DOWN_ITEM_TOOLTIP.toString(), true);
+        addItemButton = gui.initChildButton(itemsToolbar, ADD_ICON.toString(), ADD_ITEM_TOOLTIP.toString(), false);
+        removeItemButton = gui.initChildButton(itemsToolbar, REMOVE_ICON.toString(), REMOVE_ITEM_TOOLTIP.toString(), true);
+        moveUpItemButton = gui.initChildButton(itemsToolbar, MOVE_UP_ICON.toString(), MOVE_UP_ITEM_TOOLTIP.toString(), true);
+        moveDownItemButton = gui.initChildButton(itemsToolbar, MOVE_DOWN_ICON.toString(), MOVE_DOWN_ITEM_TOOLTIP.toString(), true);
         itemsTable = new TableView();
         itemsBox.getChildren().add(itemsLabel);
         itemsBox.getChildren().add(itemsToolbar);
         itemsBox.getChildren().add(itemsTable);
         
         // NOW SETUP THE TABLE COLUMNS
-        itemCategoryColumn = new TableColumn(props.getProperty(PropertyType.CATEGORY_COLUMN_HEADING));
-        itemDescriptionColumn = new TableColumn(props.getProperty(PropertyType.DESCRIPTION_COLUMN_HEADING));
-        itemStartDateColumn = new TableColumn(props.getProperty(PropertyType.START_DATE_COLUMN_HEADING));
-        itemEndDateColumn = new TableColumn(props.getProperty(PropertyType.END_DATE_COLUMN_HEADING));
-        itemCompletedColumn = new TableColumn(props.getProperty(PropertyType.COMPLETED_COLUMN_HEADING));
+        itemCategoryColumn = new TableColumn(props.getProperty(CATEGORY_COLUMN_HEADING));
+        itemDescriptionColumn = new TableColumn(props.getProperty(DESCRIPTION_COLUMN_HEADING));
+        itemStartDateColumn = new TableColumn(props.getProperty(START_DATE_COLUMN_HEADING));
+        itemEndDateColumn = new TableColumn(props.getProperty(END_DATE_COLUMN_HEADING));
+        itemCompletedColumn = new TableColumn(props.getProperty(COMPLETED_COLUMN_HEADING));
         
         // AND LINK THE COLUMNS TO THE DATA
         itemCategoryColumn.setCellValueFactory(new PropertyValueFactory<String, String>("category"));
@@ -182,7 +203,6 @@ public class Workspace extends AppWorkspaceComponent {
         itemsTable.getColumns().add(itemStartDateColumn);
         itemsTable.getColumns().add(itemEndDateColumn);
         itemsTable.getColumns().add(itemCompletedColumn);
-        DataManager dataManager = (DataManager)app.getDataComponent();
         itemsTable.setItems(dataManager.getItems());
 
 	// AND NOW SETUP THE WORKSPACE
@@ -348,7 +368,12 @@ public class Workspace extends AppWorkspaceComponent {
      */
     @Override
     public void reloadWorkspace() {
-	DataManager dataManager = (DataManager)app.getDataComponent();
+	// INIT ALL WORKSPACE COMPONENTS
+	layoutGUI();
         
+        // AND SETUP EVENT HANDLING
+	setupHandlers();
+        
+        initStyle();
     }
 }

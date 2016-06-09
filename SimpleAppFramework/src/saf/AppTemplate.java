@@ -62,7 +62,7 @@ public abstract class AppTemplate extends Application {
 
     /**
      * This is where our Application begins its initialization, it will create
-     * the WPM_GUI and initialize all of its components.
+     * the TDLM_GUI and initialize all of its components.
      *
      * @param primaryStage This application's window.
      */

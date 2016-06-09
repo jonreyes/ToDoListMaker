@@ -1,20 +1,22 @@
 package tdlm.controller;
 
+import java.time.LocalDate;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import properties_manager.PropertiesManager;
 import tdlm.gui.Workspace;
 import saf.AppTemplate;
-import static saf.ui.AppYesNoCancelDialogSingleton.YES;
+import static saf.settings.AppStartupConstants.YES;
+import tdlm.PropertyType;
 import tdlm.gui.InputItemDialogSingleton;
 import static tdlm.PropertyType.INPUT_ITEM_MESSAGE;
 import static tdlm.PropertyType.ADD_ITEM_TITLE;
 import static tdlm.PropertyType.EDIT_ITEM_TITLE;
+import static tdlm.PropertyType.OK;
 import static tdlm.PropertyType.REMOVE_ITEM_MESSAGE;
 import static tdlm.PropertyType.REMOVE_ITEM_TITLE;
 import tdlm.data.DataManager;
 import tdlm.data.ToDoItem;
-import static tdlm.gui.InputItemDialogSingleton.OK;
 import tdlm.gui.RemoveItemDialogSingleton;
 /**
  * This class responds to interactions with todo list editing controls.
@@ -25,7 +27,12 @@ import tdlm.gui.RemoveItemDialogSingleton;
 public class ToDoListController {
     AppTemplate app;
     
+    // WE WANT TO KEEP TRACK OF WHEN SOMETHING HAS NOT BEEN SAVED
+    boolean saved;
+    
     public ToDoListController(AppTemplate initApp) {
+        // NOTHING YET
+        saved = true;
         app = initApp;
     }
     
@@ -33,18 +40,24 @@ public class ToDoListController {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
         
-        // UPDATE NAME
+        // UPDATE NAME AND SAVE STATUS
         String newName = workspace.getNameTextField().getText();
         dataManager.setName(newName);
+        saved = false;
+        
+        app.getGUI().updateToolbarControls(saved);
     }
     
     public void processOwnerUpdate(){
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
         
-        // UPDATE OWNER
+        // UPDATE OWNER AND SAVE STATUS
         String newOwner = workspace.getOwnerTextField().getText();
         dataManager.setOwner(newOwner);
+        saved = false;
+        
+        app.getGUI().updateToolbarControls(saved);
     }
     
     public void processAddItem() {
@@ -53,29 +66,35 @@ public class ToDoListController {
         
         // SHOW ADD ITEM PROMPT
         InputItemDialogSingleton dialog = workspace.getInputItemDialog();
+        // DEFAULT DATE SELECTION
+        dialog.getStartDatePicker().setValue(LocalDate.now());
+        dialog.getEndDatePicker().setValue(LocalDate.now());
+        // SHOW
         dialog.show(props.getProperty(ADD_ITEM_TITLE),props.getProperty(INPUT_ITEM_MESSAGE));
         
         // VERIFY ACTION
         String selection = dialog.getSelection();
-        if (selection.equals(OK)){
+        if (selection.equals(props.getProperty(OK))){
             // ADD NEW ITEM DATA WITH USER INPUT 
             ToDoItem newItem = dialog.getItem();
             DataManager dataManager = (DataManager)app.getDataComponent();
             dataManager.addItem(newItem);
-        
-            // UPDATE THE TABLE AND SIZE
+            
+            // UPDATE THE TABLE AND SAVE STATUS
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             itemsTable.setItems(dataManager.getItems());
-        
-            // CLEAR INPUT FIELDS
+            saved = false;
+            
+            // RESET INPUT FIELDS
             dialog.getCategoryTextField().clear();
             dialog.getDescriptionTextField().clear();
-            dialog.getStartDatePicker().setValue(null);
-            dialog.getEndDatePicker().setValue(null);
+            dialog.getStartDatePicker().setValue(LocalDate.now());
+            dialog.getEndDatePicker().setValue(LocalDate.now());
             dialog.getCompletedCheckBox().setSelected(false);
             
             // ENABLE AND DISABLE APPROPRIATE CONTROLS
             workspace.updateTableControls();
+            app.getGUI().updateToolbarControls(saved);
         }
     }
 
@@ -90,18 +109,20 @@ public class ToDoListController {
         // AND NOW GET THE USER'S SELECTION
         String selection = dialog.getSelection();
         // IF THE USER SAID YES, THEN SAVE REMOVE ITEM
-        if (selection.equals(YES)){
+        if (selection.equals(props.getProperty(YES))){
             // GET SELECTED ITEM TO REMOVE
             TableView<ToDoItem> itemsTable = workspace.getItemsTable();
             ToDoItem selectedItem = itemsTable.getSelectionModel().getSelectedItem();
             DataManager dataManager = (DataManager)app.getDataComponent();
             dataManager.removeItem(selectedItem);
         
-            // UPDATE THE TABLE AND SIZE
+            // UPDATE THE TABLE AND SAVE STATUS
             itemsTable.setItems(dataManager.getItems());
+            saved = false;
         
             // ENABLE AND DISABLE APPROPRIATE CONTROLS
             workspace.updateTableControls();
+            app.getGUI().updateToolbarControls(saved);
         }
     }
     
@@ -120,11 +141,13 @@ public class ToDoListController {
         dataManager.getItems().set(previous,selectedItem);
         dataManager.getItems().set(index, previousItem);
            
-        // UPDATE THE TABLE
+        // UPDATE THE TABLE AND SAVE STATUS
         itemsTable.setItems(dataManager.getItems());
+        saved = false;
         
         // ENABLE AND DISABLE APPROPRIATE CONTROLS
         workspace.updateTableControls();
+        app.getGUI().updateToolbarControls(saved);
     }
 
     public void processMoveDownItem() {
@@ -142,11 +165,13 @@ public class ToDoListController {
         dataManager.getItems().set(next,selectedItem);
         dataManager.getItems().set(index, nextItem);
         
-        // UPDATE THE TABLE
+        // UPDATE THE TABLE AND SAVE STATUS
         itemsTable.setItems(dataManager.getItems());
+        saved = false;
         
         // ENABLE AND DISABLE APPROPRIATE CONTROLS
         workspace.updateTableControls();
+        app.getGUI().updateToolbarControls(saved);
     }
 
      public TableRow<ToDoItem> processEditItem(){
@@ -173,15 +198,19 @@ public class ToDoListController {
                 
                 // VERIFY ACTION
                 String selection = dialog.getSelection();
-                if (selection.equals(OK)){
+                if (selection.equals(props.getProperty(OK))){
                     // MODIFY SELECTED ITEM IN LIST
                     int selectedItemIndex = dataManager.getItems().indexOf(selectedItem);
                     ToDoItem newItem = dialog.getItem();
                     dataManager.getItems().set(selectedItemIndex,newItem);
 
-                    // UPDATE THE TABLE
+                    // UPDATE THE TABLE AND SAVE STATUS
                     TableView<ToDoItem> itemsTable = workspace.getItemsTable();
                     itemsTable.setItems(dataManager.getItems());
+                    saved = false;
+                    
+                    // ENABLE AND DISABLE APPROPRIATE CONTROLS
+                    app.getGUI().updateToolbarControls(saved);
                 }
             }
         });

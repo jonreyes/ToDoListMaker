@@ -24,5 +24,10 @@ public class AppStartupConstants
     public static String PROPERTIES_FILE_ERROR_MESSAGE = "Error Loading properties.xml";
 
     // ERROR DIALOG CONTROL
-    public static String CLOSE_BUTTON_LABEL = "Close";
+    public static String CLOSE = "Close";
+    
+    // CONSTANT CHOICES
+    public static final String YES = "Yes";
+    public static final String NO = "No";
+    public static final String CANCEL = "Cancel";
 }
