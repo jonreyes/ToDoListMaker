@@ -368,12 +368,9 @@ public class Workspace extends AppWorkspaceComponent {
      */
     @Override
     public void reloadWorkspace() {
-	// INIT ALL WORKSPACE COMPONENTS
-	layoutGUI();
-        
-        // AND SETUP EVENT HANDLING
-	setupHandlers();
-        
-        initStyle();
+	DataManager dataManager = (DataManager)app.getDataComponent();
+        nameTextField.setText(dataManager.getName());
+        ownerTextField.setText(dataManager.getOwner());
+        itemsTable.setItems(dataManager.getItems());
     }
 }
