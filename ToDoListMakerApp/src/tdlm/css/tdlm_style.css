@@ -8,27 +8,32 @@
     Author:	?
     Version:	1.0
 */
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
 
 .bordered_pane {
-    -fx-background-color: #aaaaff;
+    -fx-background-color: #68C2F2;
     -fx-background-radius: 5.0;
     -fx-padding: 15;
     -fx-spacing: 10;
     -fx-border-width: 2px;
-    -fx-border-color: #7777dd;
+    -fx-border-color: #13A1ED;
+    -fx-font-family: 'Pacifico', cursive;
 }
 
 .heading_label {
-    -fx-font-size: 20pt;
+    -fx-font-size: 30pt;
     -fx-font-weight: bold;
+    -fx-font-family: 'Pacifico', cursive;
 }
 
 .subheading_label {
-    -fx-font-size: 14pt;
+    -fx-font-size: 21pt;
     -fx-font-weight: bold;
+    -fx-font-family: 'Pacifico', cursive;
 }
 
 .prompt_label {
-    -fx-font-size: 10pt;
+    -fx-font-size: 20pt;
     -fx-font-weight: bold;
+    -fx-font-family: 'Pacifico', cursive;
 }
