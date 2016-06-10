@@ -27,6 +27,6 @@ public class AppStartupConstants
     public static String CLOSE = "Close";
     
     // SCALARS FOR FIXING THE WINDOW POSITION AND SIZE
-    public static double SCALEX = 0.3;
-    public static double SCALEW = 0.4;
+    public static double SCALEX = 0.35;
+    public static double SCALEW = 0.3;
 }
