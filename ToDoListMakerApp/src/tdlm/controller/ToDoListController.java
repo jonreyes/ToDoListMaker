@@ -39,24 +39,31 @@ public class ToDoListController {
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
         
-        // UPDATE NAME AND SAVE STATUS
+        // GET INPUT NAME
         String newName = workspace.getNameTextField().getText();
-        dataManager.setName(newName);
-        saved = false;
         
-        app.getGUI().updateToolbarControls(saved);
+        // IF CHANGED UPDATE DATA AND TOOLBAR
+        if (!newName.equals(dataManager.getName())){
+            dataManager.setName(newName);
+            saved = false;
+        
+            app.getGUI().updateToolbarControls(saved);
+        }
     }
     
     public void processOwnerUpdate(){
         Workspace workspace = (Workspace)app.getWorkspaceComponent();
         DataManager dataManager = (DataManager)app.getDataComponent();
         
-        // UPDATE OWNER AND SAVE STATUS
+        // GET INPUT OWNER
         String newOwner = workspace.getOwnerTextField().getText();
-        dataManager.setOwner(newOwner);
-        saved = false;
+         // IF CHANGED UPDATE DATA AND TOOLBAR
+        if (newOwner.equals(dataManager.getOwner())){
+            dataManager.setOwner(newOwner);
+            saved = false;
         
-        app.getGUI().updateToolbarControls(saved);
+            app.getGUI().updateToolbarControls(saved);
+        }
     }
     
     public void processAddItem() {
