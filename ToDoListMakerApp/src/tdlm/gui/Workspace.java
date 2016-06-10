@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -43,6 +44,7 @@ import static tdlm.PropertyType.REMOVE_ITEM_TOOLTIP;
 import static tdlm.PropertyType.START_DATE_COLUMN_HEADING;
 import static tdlm.PropertyType.WORKSPACE_HEADING_LABEL;
 import tdlm.data.ToDoItem;
+import static tdlm.gui.WorkspaceConstants.*;
 
 /**
  * This class serves as the workspace component for this application, providing
@@ -52,17 +54,7 @@ import tdlm.data.ToDoItem;
  * @version 1.0
  */
 public class Workspace extends AppWorkspaceComponent {
-
-    // THESE CONSTANTS ARE FOR TYING THE PRESENTATION STYLE OF
-    // THIS Workspace'S COMPONENTS TO A STYLE SHEET THAT IT USES
-    static final String CLASS_BORDERED_PANE = "bordered_pane";
-    static final String CLASS_HEADING_LABEL = "heading_label";
-    static final String CLASS_SUBHEADING_LABEL = "subheading_label";
-    static final String CLASS_PROMPT_LABEL = "prompt_label";
-    static final String EMPTY_TEXT = "";
-    static final int LARGE_TEXT_FIELD_LENGTH = 20;
-    static final int SMALL_TEXT_FIELD_LENGTH = 5;
-
+    
     // HERE'S THE APP
     AppTemplate app;
 
@@ -78,7 +70,7 @@ public class Workspace extends AppWorkspaceComponent {
     // THIS HAS OUR TODO LIST DETAILS
     VBox detailsBox;
     Label detailsLabel;
-    HBox nameAndOwnerBox;
+    GridPane nameAndOwnerBox;
     HBox nameBox;
     Label nameLabel;
     TextField nameTextField;
@@ -147,7 +139,7 @@ public class Workspace extends AppWorkspaceComponent {
         detailsLabel.setText(props.getProperty(DETAILS_HEADING_LABEL));
         
         // THIS WILL CONTAIN BOTH
-        nameAndOwnerBox = new HBox();
+        nameAndOwnerBox = new GridPane();
         
         // THIS JUST THE NAME
         nameBox = new HBox();
@@ -164,8 +156,12 @@ public class Workspace extends AppWorkspaceComponent {
         ownerTextField.setText(dataManager.getOwner());
         ownerBox.getChildren().addAll(ownerLabel, ownerTextField);
         
-        // ARRANGE THE CONTENTS OF BOTH ON A SINGLE LINE
-        nameAndOwnerBox.getChildren().addAll(nameBox, ownerBox);
+        // ARRANGE THE CONTENTS
+        nameAndOwnerBox.add(nameLabel,0,0);
+        nameAndOwnerBox.add(nameTextField, 1, 0);
+        nameAndOwnerBox.add(ownerLabel,0,1);
+        nameAndOwnerBox.add(ownerTextField, 1,1);
+        
         
         // NOW ORGANIZE THE CONTENTS OF detailsBox
         detailsBox.getChildren().add(detailsLabel);
@@ -197,6 +193,14 @@ public class Workspace extends AppWorkspaceComponent {
         itemStartDateColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("startDate"));
         itemEndDateColumn.setCellValueFactory(new PropertyValueFactory<LocalDate, String>("endDate"));
         itemCompletedColumn.setCellValueFactory(new PropertyValueFactory<Boolean, String>("completed"));
+        
+        // SCALE THE COLUMN SIZES
+        itemCategoryColumn.prefWidthProperty().bind(itemsTable.widthProperty().multiply(0.2));
+        itemDescriptionColumn.prefWidthProperty().bind(itemsTable.widthProperty().multiply(0.2));
+        itemStartDateColumn.prefWidthProperty().bind(itemsTable.widthProperty().multiply(0.2));
+        itemEndDateColumn.prefWidthProperty().bind(itemsTable.widthProperty().multiply(0.2));
+        itemCompletedColumn.prefWidthProperty().bind(itemsTable.widthProperty().multiply(0.2));
+        
         itemsTable.getColumns().add(itemCategoryColumn);
         itemsTable.getColumns().add(itemDescriptionColumn);
         itemsTable.getColumns().add(itemStartDateColumn);
@@ -355,10 +359,18 @@ public class Workspace extends AppWorkspaceComponent {
         // THEN THE DETAILS PANE AND ITS COMPONENTS
         detailsBox.getStyleClass().add(CLASS_BORDERED_PANE);
         detailsLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        nameAndOwnerBox.getStyleClass().add(CLASS_GRID);
+        nameBox.getStyleClass().add(CLASS_HBOX);
         nameLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        ownerBox.getStyleClass().add(CLASS_HBOX);
         ownerLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
         itemsBox.getStyleClass().add(CLASS_BORDERED_PANE);
         itemsLabel.getStyleClass().add(CLASS_SUBHEADING_LABEL);
+        itemCategoryColumn.getStyleClass().add(CLASS_COLUMN);
+        itemDescriptionColumn.getStyleClass().add(CLASS_COLUMN);
+        itemStartDateColumn.getStyleClass().add(CLASS_COLUMN);
+        itemEndDateColumn.getStyleClass().add(CLASS_COLUMN);
+        itemCompletedColumn.getStyleClass().add(CLASS_COLUMN);
     }
 
     /**

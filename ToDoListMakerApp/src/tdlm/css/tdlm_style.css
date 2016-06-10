@@ -12,43 +12,41 @@
 
 .bordered_pane {
     -fx-background-color: #68C2F2;
-    -fx-background-radius: 5.0;
+    -fx-background-radius: 25.0;
     -fx-padding: 15;
     -fx-spacing: 10;
-    -fx-border-width: 2px;
+    -fx-border-width: 10px;
     -fx-border-color: #13A1ED;
-    -fx-font-family: 'Pacifico', cursive;
+    -fx-border-radius: 20;
 }
 
 .heading_label {
-    -fx-font-size: 30pt;
+    -fx-font-size: 28pt;
     -fx-font-weight: bold;
     -fx-font-family: 'Pacifico', cursive;
 }
 
 .subheading_label {
-    -fx-font-size: 21pt;
+    -fx-font-size: 19pt;
     -fx-font-weight: bold;
     -fx-font-family: 'Pacifico', cursive;
 }
 
 .prompt_label {
-    -fx-font-size: 20pt;
+    -fx-font-size: 15pt;
     -fx-font-weight: bold;
     -fx-font-family: 'Pacifico';
 }
 
-.dialog{
-    -fx-font-size: 14pt;
-    -fx-font-weight: bold;
-    -fx-font-family: 'Pacifico';
+.column{
+    -fx-alignment: center;
 }
 
 .grid{
-    -fx-hgap:10;
+    -fx-hgap:15;
     -fx-vgap:10;
 }
 
 .hbox{
-    -fx-spacing: 10;
+    -fx-spacing: 15;
 }

@@ -18,6 +18,8 @@ import static saf.settings.AppPropertyType.*;
 import static saf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static saf.settings.AppStartupConstants.PATH_IMAGES;
 import saf.components.AppStyleArbiter;
+import static saf.settings.AppStartupConstants.SCALEX;
+import static saf.settings.AppStartupConstants.SCALEW;
 
 /**
  * This class provides the basic user interface for this application,
@@ -169,9 +171,9 @@ public class AppGUI implements AppStyleArbiter {
         Rectangle2D bounds = screen.getVisualBounds();
 
         // AND USE IT TO SIZE THE WINDOW
-        primaryStage.setX(bounds.getMinX());
+        primaryStage.setX(SCALEX*bounds.getWidth());
         primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setWidth(SCALEW*bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
 
         // ADD THE TOOLBAR ONLY, NOTE THAT THE WORKSPACE

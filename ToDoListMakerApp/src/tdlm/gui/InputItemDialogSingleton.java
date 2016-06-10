@@ -34,7 +34,7 @@ import static tdlm.PropertyType.END_LABEL;
 import static tdlm.PropertyType.OK;
 import static tdlm.PropertyType.START_LABEL;
 import tdlm.data.ToDoItem;
-import static tdlm.gui.Workspace.CLASS_BORDERED_PANE;
+import static tdlm.gui.WorkspaceConstants.*;
 
 /**
  * This class serves to present an Add Item input dialog.
@@ -48,8 +48,6 @@ public class InputItemDialogSingleton extends Stage {
     // THESE CONSTANTS ARE FOR TYING THE PRESENTATION STYLE OF
     // THIS DIALOG'S COMPONENTS TO A STYLE SHEET THAT IT USES
     static final String CLASS_DIALOG_LABEL = "dialog_label";
-    static final String CLASS_GRID = "grid";
-    static final String CLASS_HBOX = "hbox";
     
     // HERE'S THE APP
     AppTemplate app;
@@ -280,12 +278,12 @@ public class InputItemDialogSingleton extends Stage {
     
     private void initStyle(){
         messagePane.getStyleClass().add(CLASS_BORDERED_PANE);
-        messageLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
-        categoryLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
-        descriptionLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
-        startLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
-        endLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
-        completedCheckBox.getStyleClass().add(CLASS_DIALOG_LABEL);
+        messageLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        categoryLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        descriptionLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        startLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        endLabel.getStyleClass().add(CLASS_PROMPT_LABEL);
+        completedCheckBox.getStyleClass().add(CLASS_PROMPT_LABEL);
         inputGrid.getStyleClass().add(CLASS_GRID);
         controlBox.getStyleClass().add(CLASS_HBOX);
     }

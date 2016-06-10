@@ -26,4 +26,7 @@ public class AppStartupConstants
     // ERROR DIALOG CONTROL
     public static String CLOSE = "Close";
     
+    // SCALARS FOR FIXING THE WINDOW POSITION AND SIZE
+    public static double SCALEX = 0.3;
+    public static double SCALEW = 0.4;
 }
