@@ -57,7 +57,8 @@ public class ToDoListController {
         
         // GET INPUT OWNER
         String newOwner = workspace.getOwnerTextField().getText();
-         // IF CHANGED UPDATE DATA AND TOOLBAR
+        
+        // IF CHANGED UPDATE DATA AND TOOLBAR
         if (!newOwner.equals(dataManager.getOwner())){
             dataManager.setOwner(newOwner);
             saved = false;
