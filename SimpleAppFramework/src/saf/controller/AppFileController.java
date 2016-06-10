@@ -317,7 +317,11 @@ public class AppFileController {
 
                 // MAKE SURE THE WORKSPACE IS ACTIVATED
 		app.getWorkspaceComponent().activateWorkspace(app.getGUI().getAppPane());
+                
+                // MARK IT AS SAVED
+                currentWorkFile = selectedFile;
                 saved = true;
+                
                 app.getGUI().updateToolbarControls(saved);
             } catch (Exception e) {
                 AppMessageDialogSingleton dialog = AppMessageDialogSingleton.getSingleton();

@@ -111,6 +111,7 @@ public class AppGUI implements AppStyleArbiter {
      * @param saved Describes whether the loaded Page has been saved or not.
      */
     public void updateToolbarControls(boolean saved) {
+        if (!saved) fileController.markFileAsNotSaved();
         // THIS TOGGLES WITH WHETHER THE CURRENT COURSE
         // HAS BEEN SAVED OR NOT
         saveButton.setDisable(saved);
