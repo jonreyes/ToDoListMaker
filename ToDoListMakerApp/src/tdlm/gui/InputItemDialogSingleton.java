@@ -183,6 +183,7 @@ public class InputItemDialogSingleton extends Stage {
         initOwner(gui.getWindow());
         
         layoutGUI();
+        setupHandlers();
         
         initStyleSheet();
         initStyle();
@@ -221,27 +222,6 @@ public class InputItemDialogSingleton extends Stage {
         cancelButton = new Button(CANCEL);
         controlBox.getChildren().addAll(okButton,cancelButton);
         
-        // MAKE THE EVENT HANDLER FOR THESE BUTTONS
-        EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
-            Button sourceButton = (Button)ae.getSource();
-            InputItemDialogSingleton.this.selection = sourceButton.getText();
-            if (InputItemDialogSingleton.this.selection.equals(props.getProperty(OK))){
-                // CREATE NEW ITEM FROM INPUT
-                newItem = new ToDoItem(
-                    categoryTextField.getText(),
-                    descriptionTextField.getText(),
-                    startDatePicker.getValue(),
-                    endDatePicker.getValue(),
-                    completedCheckBox.isSelected()
-                );
-            }            
-            InputItemDialogSingleton.this.hide();
-        };
-        
-        // AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
-        okButton.setOnAction(okCancelHandler);
-        cancelButton.setOnAction(okCancelHandler);
-        
         // INPUT GRID
         inputGrid = new GridPane();
         inputGrid.setAlignment(Pos.CENTER);
@@ -264,6 +244,31 @@ public class InputItemDialogSingleton extends Stage {
         // AND PUT IT IN THE WINDOW
         messageScene = new Scene(messagePane, 450, 450);
         this.setScene(messageScene);
+    }
+    
+    private void setupHandlers(){
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+                
+        // MAKE THE EVENT HANDLER FOR THESE BUTTONS
+        EventHandler okCancelHandler = (EventHandler<ActionEvent>) (ActionEvent ae) -> {
+            Button sourceButton = (Button)ae.getSource();
+            InputItemDialogSingleton.this.selection = sourceButton.getText();
+            if (InputItemDialogSingleton.this.selection.equals(props.getProperty(OK))){
+                // CREATE NEW ITEM FROM INPUT
+                newItem = new ToDoItem(
+                    categoryTextField.getText(),
+                    descriptionTextField.getText(),
+                    startDatePicker.getValue(),
+                    endDatePicker.getValue(),
+                    completedCheckBox.isSelected()
+                );
+            }            
+            InputItemDialogSingleton.this.hide();
+        };
+        
+        // AND THEN REGISTER THEM TO RESPOND TO INTERACTIONS
+        okButton.setOnAction(okCancelHandler);
+        cancelButton.setOnAction(okCancelHandler);
     }
     
     private void initStyleSheet(){
