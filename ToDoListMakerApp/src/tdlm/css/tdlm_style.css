@@ -35,5 +35,20 @@
 .prompt_label {
     -fx-font-size: 20pt;
     -fx-font-weight: bold;
-    -fx-font-family: 'Pacifico', cursive;
+    -fx-font-family: 'Pacifico';
+}
+
+.dialog{
+    -fx-font-size: 14pt;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Pacifico';
+}
+
+.grid{
+    -fx-hgap:10;
+    -fx-vgap:10;
+}
+
+.hbox{
+    -fx-spacing: 10;
 }

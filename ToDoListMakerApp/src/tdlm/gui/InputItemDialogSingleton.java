@@ -5,6 +5,7 @@
  */
 package tdlm.gui;
 
+import java.net.URL;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,6 +22,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import properties_manager.PropertiesManager;
+import saf.AppTemplate;
+import static saf.settings.AppPropertyType.APP_CSS;
+import static saf.settings.AppPropertyType.APP_PATH_CSS;
+import saf.ui.AppGUI;
 import static saf.ui.AppYesNoCancelDialogSingleton.CANCEL;
 import static tdlm.PropertyType.CATEGORY_LABEL;
 import static tdlm.PropertyType.COMPLETED_LABEL;
@@ -29,6 +34,7 @@ import static tdlm.PropertyType.END_LABEL;
 import static tdlm.PropertyType.OK;
 import static tdlm.PropertyType.START_LABEL;
 import tdlm.data.ToDoItem;
+import static tdlm.gui.Workspace.CLASS_BORDERED_PANE;
 
 /**
  * This class serves to present an Add Item input dialog.
@@ -38,6 +44,18 @@ import tdlm.data.ToDoItem;
 public class InputItemDialogSingleton extends Stage {
     // HERE'S THE SINGLETON OBJECT
     static InputItemDialogSingleton singleton = null;
+    
+    // THESE CONSTANTS ARE FOR TYING THE PRESENTATION STYLE OF
+    // THIS DIALOG'S COMPONENTS TO A STYLE SHEET THAT IT USES
+    static final String CLASS_DIALOG_LABEL = "dialog_label";
+    static final String CLASS_GRID = "grid";
+    static final String CLASS_HBOX = "hbox";
+    
+    // HERE'S THE APP
+    AppTemplate app;
+
+    // IT KNOWS THE GUI IT IS PLACED INSIDE
+    AppGUI gui;
     
     // HERE ARE THE DIALOG COMPONENTS 
     VBox messagePane;
@@ -58,8 +76,6 @@ public class InputItemDialogSingleton extends Stage {
     Label endLabel;
     DatePicker endDatePicker;
     
-    HBox completedBox;
-    Label completedLabel;
     CheckBox completedCheckBox;
     
     HBox controlBox;
@@ -154,14 +170,29 @@ public class InputItemDialogSingleton extends Stage {
     /**
      * This method initializes the singleton for use.
      * 
-     * @param owner The window above which this dialog will be centered.
+     * @param initApp The application this dialog is part of.
      */
-    public void init(Stage owner) {
-        PropertiesManager props = PropertiesManager.getPropertiesManager();
+    public void init(AppTemplate initApp) {
+        // KEEP THIS FOR LATER
+	app = initApp;
+
+	// KEEP THE GUI FOR LATER
+	gui = app.getGUI();
+        
         // MAKE THIS DIALOG MODAL, MEANING OTHERS WILL WAIT
         // FOR IT WHEN IT IS DISPLAYED
         initModality(Modality.WINDOW_MODAL);
-        initOwner(owner);
+        initOwner(gui.getWindow());
+        
+        layoutGUI();
+        
+        initStyleSheet();
+        initStyle();
+        
+    }
+    
+    private void layoutGUI(){
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         // LABEL TO DISPLAY THE CUSTOM MESSAGE
         messageLabel = new Label();
@@ -215,6 +246,7 @@ public class InputItemDialogSingleton extends Stage {
         
         // INPUT GRID
         inputGrid = new GridPane();
+        inputGrid.setAlignment(Pos.CENTER);
         inputGrid.addRow(0,categoryLabel,categoryTextField);
         inputGrid.addRow(1,descriptionLabel,descriptionTextField);
         inputGrid.addRow(2,startLabel,startDatePicker);
@@ -230,11 +262,32 @@ public class InputItemDialogSingleton extends Stage {
         
         // MAKE IT LOOK NICE
         messagePane.setPadding(new Insets(40, 30, 40, 30));
-        messagePane.setSpacing(20);
         
         // AND PUT IT IN THE WINDOW
-        messageScene = new Scene(messagePane);
+        messageScene = new Scene(messagePane, 450, 450);
         this.setScene(messageScene);
+    }
+    
+    private void initStyleSheet(){
+         // LOADING CSS
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+	String stylesheet = props.getProperty(APP_PATH_CSS);
+	stylesheet += props.getProperty(APP_CSS);
+	URL stylesheetURL = app.getClass().getResource(stylesheet);
+	String stylesheetPath = stylesheetURL.toExternalForm();
+        messageScene.getStylesheets().add(stylesheetPath);
+    }
+    
+    private void initStyle(){
+        messagePane.getStyleClass().add(CLASS_BORDERED_PANE);
+        messageLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
+        categoryLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
+        descriptionLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
+        startLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
+        endLabel.getStyleClass().add(CLASS_DIALOG_LABEL);
+        completedCheckBox.getStyleClass().add(CLASS_DIALOG_LABEL);
+        inputGrid.getStyleClass().add(CLASS_GRID);
+        controlBox.getStyleClass().add(CLASS_HBOX);
     }
     
     /**

@@ -24,7 +24,6 @@ import saf.AppTemplate;
 import saf.components.AppWorkspaceComponent;
 import static saf.settings.AppStartupConstants.FILE_PROTOCOL;
 import static saf.settings.AppStartupConstants.PATH_IMAGES;
-import tdlm.PropertyType;
 import static tdlm.PropertyType.ADD_ICON;
 import static tdlm.PropertyType.ADD_ITEM_TOOLTIP;
 import static tdlm.PropertyType.CATEGORY_COLUMN_HEADING;
@@ -213,7 +212,7 @@ public class Workspace extends AppWorkspaceComponent {
         
         // SETUP DIALOGS
         inputItemDialog = InputItemDialogSingleton.getSingleton();
-        inputItemDialog.init(gui.getWindow());
+        inputItemDialog.init(app);
         removeItemDialog = RemoveItemDialogSingleton.getSingleton();
         removeItemDialog.init(gui.getWindow());
     }
